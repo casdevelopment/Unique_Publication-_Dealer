@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.newapp"
+    namespace = "com.publication.dealer"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.newapp"
+        applicationId = "com.publication.dealer"
         minSdk = 24
         targetSdk = 36
         versionCode = 1

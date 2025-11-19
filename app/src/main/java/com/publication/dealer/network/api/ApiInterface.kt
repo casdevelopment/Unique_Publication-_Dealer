@@ -1,0 +1,24 @@
+package com.publication.dealer.network.api
+
+import com.publication.dealer.user_dashboard.model.DashBoardRequestModel
+import com.publication.dealer.user_dashboard.model.DashBoardResponseData
+import com.publication.dealer.login.model.LoginRequestModel
+import com.publication.dealer.login.model.LoginResponseModel
+import com.publication.dealer.network.retofit.BaseResponse
+
+import retrofit2.Response
+import retrofit2.http.Body
+import retrofit2.http.POST
+
+interface ApiInterface {
+
+
+    // Login API
+    @POST("Dealer/login")
+    suspend fun login(@Body loginRequest: LoginRequestModel): Response<BaseResponse<LoginResponseModel>>
+
+    @POST("Dealer/get-ledger-report")
+    suspend fun dashBoardData(@Body dashBoardRequestModel: DashBoardRequestModel): Response<BaseResponse<List<DashBoardResponseData>>>
+
+    // Add more APIs here as needed
+}

@@ -55,7 +55,7 @@
             android:layout_marginBottom="4dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/user_name"
+            android:text="@string/user_id"
             android:textSize="14sp"
             android:textColor="@color/primary_color"
            />
@@ -73,7 +73,7 @@
                 android:layout_height="wrap_content"
 
                 android:inputType="text"
-                android:id="@+id/etUsername"
+                android:id="@+id/etUserId"
                 android:padding="16dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
