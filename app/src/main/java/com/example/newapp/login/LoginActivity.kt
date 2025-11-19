@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.newapp.dashboard.MainDashBoardActivity
+import com.example.newapp.user_dashboard.MainDashBoardActivity
 import com.example.newapp.SessionManager
 import com.example.newapp.databinding.ActivityLoginBinding
 import com.example.newapp.login.model.LoginRequestModel

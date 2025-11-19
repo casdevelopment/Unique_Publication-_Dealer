@@ -1,10 +1,8 @@
-package com.example.newapp.dashboard
+package com.example.newapp.user_dashboard
 
 import android.os.Bundle
 import android.app.DatePickerDialog
 import android.content.Intent
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -17,14 +15,16 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newapp.R
 import com.example.newapp.SessionManager
-import com.example.newapp.login.viewmodel.LoginViewModel
 import com.example.newapp.network.Status
 import com.example.newapp.splash.SplashActivity
+import com.example.newapp.user_dashboard.adapter.DashBoardAdapter
+import com.example.newapp.user_dashboard.model.DashBoardRequestModel
+import com.example.newapp.user_dashboard.model.DashBoardResponseData
+import com.example.newapp.user_dashboard.viewmodel.DashBoardViewModel
 import com.example.newapp.util.AppUtil
 import com.example.newapp.util.showToast
 import org.koin.android.ext.android.inject

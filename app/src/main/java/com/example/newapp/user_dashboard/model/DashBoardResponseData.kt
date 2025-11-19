@@ -1,4 +1,4 @@
-package com.example.newapp.dashboard
+package com.example.newapp.user_dashboard.model
 
 data class DashBoardResponseData(
     val VTYPE: String ?=null,

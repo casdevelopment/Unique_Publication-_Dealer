@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
 import com.example.newapp.SessionManager
-import com.example.newapp.dashboard.DashBoardViewModel
+import com.example.newapp.user_dashboard.viewmodel.DashBoardViewModel
 import com.example.newapp.login.viewmodel.LoginViewModel
 import com.example.newapp.network.repo.Repository
 import com.example.newapp.network.retofit.provideOkHttpClient

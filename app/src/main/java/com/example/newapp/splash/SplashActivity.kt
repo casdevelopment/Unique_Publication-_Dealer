@@ -6,7 +6,7 @@ import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.example.newapp.dashboard.MainDashBoardActivity
+import com.example.newapp.user_dashboard.MainDashBoardActivity
 import com.example.newapp.R
 import com.example.newapp.SessionManager
 import com.example.newapp.login.LoginActivity

@@ -1,7 +1,7 @@
 package com.example.newapp.network.repo
 
-import com.example.newapp.dashboard.DashBoardRequestModel
-import com.example.newapp.dashboard.DashBoardResponseData
+import com.example.newapp.user_dashboard.model.DashBoardRequestModel
+import com.example.newapp.user_dashboard.model.DashBoardResponseData
 import com.example.newapp.login.model.LoginRequestModel
 import com.example.newapp.login.model.LoginResponseModel
 import com.example.newapp.network.retofit.BaseResponse

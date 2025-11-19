@@ -1,4 +1,4 @@
-package com.example.newapp.dashboard
+package com.example.newapp.user_dashboard.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newapp.R
 import com.example.newapp.databinding.DashboardItemBinding
+import com.example.newapp.user_dashboard.model.DashBoardResponseData
 
 class DashBoardAdapter(private val items: List<DashBoardResponseData>, var mCtx: Context) :
     RecyclerView.Adapter<DashBoardAdapter.ViewHolder>() {
