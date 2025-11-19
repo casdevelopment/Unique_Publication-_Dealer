@@ -15,6 +15,7 @@ import com.publication.dealer.util.AppConstants
 
 import com.publication.dealer.util.AppUtil
 import com.google.gson.Gson
+import com.publication.dealer.admin_dashboard.AdminDashBoardActivity
 import com.publication.dealer.login.model.LoginResponseModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -23,6 +24,7 @@ class LoginActivity : AppCompatActivity() {
 
     private val viewModel: LoginViewModel by viewModel()
     private val sessionManager: SessionManager by inject()
+
     private lateinit var binding: ActivityLoginBinding
 
  /*   private lateinit var etUsername: EditText
@@ -97,7 +99,8 @@ class LoginActivity : AppCompatActivity() {
                             startActivity(Intent(this@LoginActivity, MainDashBoardActivity::class.java))
                             finish()
                         }else if (AppConstants.userData!!.userType.equals("Admin")){
-                            // open Admin Dash board
+                            startActivity(Intent(this@LoginActivity, AdminDashBoardActivity::class.java))
+                            finish()
                         }
                     }
 

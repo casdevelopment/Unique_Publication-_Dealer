@@ -116,6 +116,7 @@ class MainDashBoardActivity : AppCompatActivity() {
 
         datePickerDialog.show()
     }
+
     private fun updateDateDisplays() {
         binding.tvSelectedDateFrom.text = selectedDateFrom?.let { dateFormatter.format(it) } ?: "Select Start Date"
         binding.tvSelectedDateTo.text = selectedDateTo?.let { dateFormatter.format(it) } ?: "Select End Date"

@@ -12,6 +12,7 @@ import com.publication.dealer.SessionManager
 import com.publication.dealer.login.LoginActivity
 import com.publication.dealer.util.AppConstants
 import com.google.gson.Gson
+import com.publication.dealer.admin_dashboard.AdminDashBoardActivity
 import com.publication.dealer.login.model.LoginResponseModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -26,12 +27,50 @@ class SplashActivity : AppCompatActivity() {
 
 
 
+        val mockUser = LoginResponseModel(
+            userId = "12345",
+            userName = "Basit Ali",
+            userType = "Admin",
+            partyCode = 101,
+            sellerType = "Dealer",
+            account_ID = "ACC123",
+            token = "mock_token",
+            mobileNumber = "+92 300 3145451082"  // if you want to show phone number
+        )
+
+        sessionManager.saveToken(AppConstants.Bearer + " " +  mockUser.token)
+        AppConstants.AUTH_TOKEN = sessionManager.getToken().toString()
+
+        // saving user info
+        sessionManager.userInfo(Gson().toJson(mockUser))
+
 
         lifecycleScope.launch {
             delay(2000)
-            if (sessionManager.isLoggedIn()) {
+//            if (sessionManager.isLoggedIn()) {
+//                // setting token
+//                AppConstants.AUTH_TOKEN = sessionManager.getToken().toString()
+//
+//                //  getting user info
+//                AppConstants.userData =Gson().fromJson( sessionManager.getUserInfo(), LoginResponseModel::class.java)
+//
+//                if(AppConstants.userData!!.userType.equals("User")){
+//                    startActivity(Intent(this@SplashActivity, MainDashBoardActivity::class.java))
+//                    finish()
+//                }else if (AppConstants.userData!!.userType.equals("Admin")){
+//                    startActivity(Intent(this@SplashActivity, AdminDashBoardActivity::class.java))
+//                    finish()
+//                }
+//            } else {
+//                startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
+//                finish()
+//            }
+
+
+
+            if (true) {
                 // setting token
-                AppConstants.AUTH_TOKEN = sessionManager.getToken().toString()
+              //  AppConstants.AUTH_TOKEN = sessionManager.getToken().toString()
 
                 //  getting user info
                 AppConstants.userData =Gson().fromJson( sessionManager.getUserInfo(), LoginResponseModel::class.java)
@@ -40,12 +79,15 @@ class SplashActivity : AppCompatActivity() {
                     startActivity(Intent(this@SplashActivity, MainDashBoardActivity::class.java))
                     finish()
                 }else if (AppConstants.userData!!.userType.equals("Admin")){
-                    // open Admin Dash board
+                    startActivity(Intent(this@SplashActivity, AdminDashBoardActivity::class.java))
+                    finish()
                 }
             } else {
                 startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
                 finish()
             }
+
+
         }
 
 
