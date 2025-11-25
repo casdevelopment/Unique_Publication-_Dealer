@@ -16,7 +16,10 @@
 
 
 
-
+    <style name="PopupMenu" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@color/white</item>
+    </style>
 
 
     <style name="Theme.NewApp" parent="Base.Theme.NewApp" />

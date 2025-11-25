@@ -7,7 +7,10 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.ContextThemeWrapper
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.publication.dealer.databinding.ActivityMainDashBoardBinding
@@ -25,6 +28,7 @@ import com.publication.dealer.user_dashboard.adapter.DashBoardAdapter
 import com.publication.dealer.user_dashboard.model.DashBoardRequestModel
 import com.publication.dealer.user_dashboard.model.DashBoardResponseData
 import com.publication.dealer.user_dashboard.viewmodel.DashBoardViewModel
+import com.publication.dealer.util.AppConstants
 import com.publication.dealer.util.AppUtil
 import com.publication.dealer.util.showToast
 import org.koin.android.ext.android.inject
@@ -40,6 +44,7 @@ class MainDashBoardActivity : AppCompatActivity() {
     private lateinit var dashBoardAdapter: DashBoardAdapter
     private lateinit var dashBoardListData: ArrayList<DashBoardResponseData>
     private val sessionManager: SessionManager by inject()
+    private lateinit var popupMenu: PopupMenu
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +59,15 @@ class MainDashBoardActivity : AppCompatActivity() {
         }
         updateDateDisplays()
         setupClickListeners()
+        setUserData()
+        setupPopupMenu()
+    }
+
+    private fun setUserData() {
+        with(binding){
+            userName.text= AppConstants.userData?.userName ?: "N/A"
+            mobileNumber.text= AppConstants.userData?.mobileNumber ?: "N/A"
+        }
     }
 
     private fun setupClickListeners() {
@@ -75,6 +89,11 @@ class MainDashBoardActivity : AppCompatActivity() {
             logOut.setOnClickListener { sessionManager.logout()
                 startActivity(Intent(this@MainDashBoardActivity, SplashActivity::class.java))
                 finish()}
+
+            option.setOnClickListener {
+                Log.v("option","option click")
+                popupMenu.show()
+            }
         }
     }
 
@@ -211,5 +230,47 @@ class MainDashBoardActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {}
         })*/
 
+
+
+    }
+
+    private fun setupPopupMenu() {
+        // Create ContextThemeWrapper for styling (optional)
+        val wrapper = ContextThemeWrapper(this, R.style.PopupMenu)
+        popupMenu = PopupMenu(wrapper, binding.option)
+
+        // Inflate the menu
+        popupMenu.menuInflater.inflate(R.menu.options_menu, popupMenu.menu)
+
+        // Handle menu item clicks
+        popupMenu.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.action_update_password -> {
+                    //updatePassword()
+                    true
+                }
+                R.id.action_logout -> {
+                    logout()
+                    true
+                }
+                else -> false
+            }
+        }
+
+        // The click listener is already set in setupClickListeners()
+        // So no need to set it here again
+    }
+
+    private fun logout() {
+        AlertDialog.Builder(this@MainDashBoardActivity)
+            .setTitle("Logout")
+            .setMessage("Are you sure you want to logout?")
+            .setPositiveButton("Yes") { dialog, which ->
+                sessionManager.logout()
+                startActivity(Intent(this@MainDashBoardActivity, SplashActivity::class.java))
+                finish()
+            }
+            .setNegativeButton("No", null)
+            .show()
     }
 }
