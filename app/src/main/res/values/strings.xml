@@ -3,4 +3,20 @@
     <string name="user_name">User Name</string>
     <string name="password">Password</string>
     <string name="user_id">USER ID</string>
+
+    <string name="add_user">Add User</string>
+    <string name="inactivate_user">Inactivate User</string>
+    <string name="reset_password">Reset Password</string>
+
+    <string name="create_account">Create Account</string>
+    <string name="message_create_account">Please fill in the details to add new user</string>
+    <string name="sign_up">Add User</string>
+    <string name="reset_password_title">Reset Password</string>
+    <string name="reset_message">Enter a user id to reset password.</string>
+    <string name="reset_cancel">Cancel</string>
+    <string name="reset_submit">Submit</string>
+    <string name="inactivate_user_title">Inactivate User</string>
+    <string name="inactivate_user_message">Enter a user id to inactivate user</string>
+    <string name="inactivate_cancel">Cancel</string>
+    <string name="inactivate_confirm">confirm</string>
 </resources>
