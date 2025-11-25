@@ -80,14 +80,15 @@ class AdminDashBoardActivity : AppCompatActivity() {
 
     private fun showAdminDetails() {
 
-        AppConstants.userData = Gson().fromJson(
-            sessionManager.getUserInfo(),
-            LoginResponseModel::class.java
-        )
-
-        binding.tvAdminName.text = AppConstants.userData?.userName ?: "Admin"
-        binding.tvAdminPhone.text = AppConstants.userData?.mobileNumber ?: "N/A"
+        with(binding){
+            userName.text= AppConstants.userData?.userName ?: "N/A"
+            mobileNumber.text= AppConstants.userData?.mobileNumber ?: "N/A"
+            address.text= AppConstants.userData?.address ?: "N/A"
+            partyGroup.text= AppConstants.userData?.partyGroup ?: "N/A"
+            accountName.text= AppConstants.userData?.account_Name ?: "N/A"
+        }
     }
+
 
 
     private fun openResetPasswordDialog() {
