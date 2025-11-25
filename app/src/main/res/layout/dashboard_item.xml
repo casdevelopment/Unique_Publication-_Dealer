@@ -76,7 +76,7 @@
                     <TextView
                         android:id="@+id/tvDebit"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="60dp"
                         android:text="8,640.00"
                         android:textSize="14sp"
                         android:textStyle="bold"
@@ -108,7 +108,7 @@
                     <TextView
                         android:id="@+id/tvCredit"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="60dp"
                         android:text="8,640.00"
                         android:textSize="14sp"
                         android:textStyle="bold"
@@ -139,7 +139,7 @@
                     <TextView
                         android:id="@+id/tvBalance"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="60dp"
                         android:text="0.00"
                         android:textSize="14sp"
                         android:textStyle="bold"
