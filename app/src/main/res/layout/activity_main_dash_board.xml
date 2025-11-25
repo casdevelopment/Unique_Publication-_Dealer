@@ -7,6 +7,7 @@
     android:id="@+id/mainLayout"
     android:background="@color/background_light">
     <RelativeLayout
+        android:visibility="gone"
 
         android:background="@color/primary_color"
         android:layout_width="match_parent"
@@ -22,19 +23,81 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <ImageView
-            android:id="@+id/logOut"
-            android:backgroundTint="@color/white"
-            android:layout_marginEnd="20dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/logout"
-            android:layout_width="20dp"
-            android:layout_height="20dp"/>
+
 
 
 
     </RelativeLayout>
+
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:weightSum="3"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <LinearLayout
+            android:gravity="center|start"
+            android:layout_weight="0.7"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:background="@drawable/logo"
+                android:layout_width="80dp"
+                android:layout_height="80dp"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="start|center"
+            android:orientation="vertical"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:id="@+id/userName"
+                android:textColor="@color/primary_color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:textStyle="normal"
+                android:textSize="14sp"
+                android:id="@+id/mobileNumber"
+                android:textColor="@color/primary_color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_weight="0.3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/option"
+                android:background="@drawable/more"
+                android:layout_width="20dp"
+                android:layout_height="20dp"/>
+
+            <ImageView
+                android:id="@+id/logOut"
+                android:visibility="gone"
+                android:background="@drawable/logout"
+                android:layout_width="20dp"
+                android:layout_height="20dp"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 
     <!-- Compact Date Selection Row -->
     <LinearLayout
@@ -94,8 +157,6 @@
             />
 
     </LinearLayout>
-
-
 
     <!-- Content Area -->
     <RelativeLayout

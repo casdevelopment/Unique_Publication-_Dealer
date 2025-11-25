@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_margin="4dp"
+    android:background="@color/background_light"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:id="@+id/topLayoyt"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="12dp"
+        android:weightSum="3"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <LinearLayout
+            android:gravity="center|start"
+            android:layout_weight="0.7"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:background="@drawable/logo"
+                android:layout_width="80dp"
+                android:layout_height="80dp"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="start|center"
+            android:orientation="vertical"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:fontFamily="@font/jost_bold"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:id="@+id/userName"
+                android:textColor="@color/primary_color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:fontFamily="@font/jost_regular"
+                android:textSize="14sp"
+                android:id="@+id/accountName"
+                android:textColor="@color/primary_color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:fontFamily="@font/jost_regular"
+                android:textSize="14sp"
+                android:id="@+id/address"
+                android:textColor="@color/primary_color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+
+            <TextView
+                android:fontFamily="@font/jost_regular"
+                android:textStyle="normal"
+                android:textSize="14sp"
+                android:id="@+id/mobileNumber"
+                android:textColor="@color/primary_color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:fontFamily="@font/jost_regular"
+                android:textSize="14sp"
+                android:id="@+id/partyGroup"
+                android:textColor="@color/primary_color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_weight="0.3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/option"
+                android:background="@drawable/more"
+                android:layout_width="20dp"
+                android:layout_height="20dp"/>
+
+            <ImageView
+                android:id="@+id/logOut"
+                android:visibility="gone"
+                android:background="@drawable/logout"
+                android:layout_width="20dp"
+                android:layout_height="20dp"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/viewLine"
+        android:layout_below="@id/topLayoyt"
+        android:background="@color/primary_color"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+
+    <TextView
+        android:layout_below="@id/viewLine"
+        android:id="@+id/heading"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/primary_color"
+        android:gravity="center"
+        android:textSize="16sp"
+
+        android:fontFamily="@font/jost_bold"
+        android:text="Monthly Transaction Summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_below="@id/heading"
+        android:id="@+id/summaryLayout"
+        android:gravity="center"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/totalDebit"
+            android:textColor="@color/primary_color"
+            tools:text="aaaa"
+            android:layout_marginEnd="4dp"
+            android:textSize="16sp"
+            android:fontFamily="@font/jost_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_marginStart="4dp"
+            android:id="@+id/totalCredit"
+            tools:text="aaaa"
+            android:textColor="@color/primary_color"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:fontFamily="@font/jost_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:layout_above="@id/viewReport"
+        android:layout_below="@id/summaryLayout"
+        android:id="@+id/barChart"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="40dp"
+        android:layout_height="wrap_content" />
+    
+    
+
+
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_alignParentBottom="true"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:text="View Report"
+        android:background="@drawable/button_primary"
+        android:id="@+id/viewReport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

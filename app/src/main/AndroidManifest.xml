@@ -17,9 +17,11 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".user_dashboard.GraphDashBoardActivity"
+            android:exported="false" />
+        <activity
             android:name=".user_dashboard.MainDashBoardActivity"
             android:exported="false" />
-
         <activity
             android:name=".login.LoginActivity"
             android:exported="false" />
