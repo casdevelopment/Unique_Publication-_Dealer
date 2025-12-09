@@ -1,6 +1,7 @@
 package com.publication.dealer.network.api
 
 import com.publication.dealer.create_user.model.SignUpRequestModel
+import com.publication.dealer.create_user.model.SignUpResponseModel
 import com.publication.dealer.inactivate_user.model.InactivateUserRequest
 import com.publication.dealer.user_dashboard.model.DashBoardRequestModel
 import com.publication.dealer.user_dashboard.model.DashBoardResponseData
@@ -26,13 +27,13 @@ interface ApiInterface {
 
 
     @POST("Dealer/create-user")
-    suspend fun signUp(@Body signUpRequest: SignUpRequestModel): Response<ResponseBody>
+    suspend fun signUp(@Body signUpRequest: SignUpRequestModel): Response<BaseResponse<Boolean>>
 
     @POST("Dealer/resetuserpassword")
-    suspend fun resetPassword(@Body request: ResetPasswordRequest): Response<ResponseBody>
+    suspend fun resetPassword(@Body request: ResetPasswordRequest): Response<BaseResponse<Boolean>>
 
     @POST("Dealer/inactivate-user")
-    suspend fun inactivateUser(@Body request: InactivateUserRequest): Response<ResponseBody>
+    suspend fun inactivateUser(@Body request: InactivateUserRequest): Response<BaseResponse<Boolean>>
 
 
 

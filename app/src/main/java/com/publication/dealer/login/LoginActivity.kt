@@ -17,6 +17,7 @@ import com.publication.dealer.util.AppUtil
 import com.google.gson.Gson
 import com.publication.dealer.admin_dashboard.AdminDashBoardActivity
 import com.publication.dealer.login.model.LoginResponseModel
+import com.publication.dealer.network.retofit.BaseResponse
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -77,41 +78,105 @@ class LoginActivity : AppCompatActivity() {
             fcmToken = "YOUR_FCM_TOKEN_HERE"
         )
 
+//        viewModel.login(loginRequest).observe(this) { apiResponse ->
+//            when (apiResponse.status) {
+//                Status.LOADING -> AppUtil.startLoader(this@LoginActivity)
+//
+//                Status.SUCCESS -> {
+//                    AppUtil.stopLoader()
+//                    val baseResponse = apiResponse.data?.body()
+//                    if (baseResponse != null) {
+//                        // Show the server message from response
+//                        Toast.makeText(this, baseResponse.message, Toast.LENGTH_SHORT).show()
+//
+//                        if (baseResponse.success) {
+//                            val loginResponse = baseResponse.data
+//                            if (loginResponse != null) {
+//                                // save token & user info
+//                                sessionManager.saveToken(AppConstants.Bearer + " " +  loginResponse.token)
+//                                AppConstants.AUTH_TOKEN = sessionManager.getToken().toString()
+//                                sessionManager.userInfo(Gson().toJson(loginResponse))
+//                                AppConstants.userData = Gson().fromJson(sessionManager.getUserInfo(), LoginResponseModel::class.java)
+//
+//                                // Navigate based on user type
+//                                if (AppConstants.userData!!.userType == "User") {
+//                                    startActivity(Intent(this@LoginActivity, MainDashBoardActivity::class.java))
+//                                } else if (AppConstants.userData!!.userType == "Admin") {
+//                                    startActivity(Intent(this@LoginActivity, AdminDashBoardActivity::class.java))
+//                                }
+//                                finish()
+//                            }
+//                        }
+//                    }
+//                }
+//
+//                Status.ERROR -> {
+//                    AppUtil.stopLoader()
+//                    // In case of network failure or exception
+//                    Toast.makeText(this, "Login Failed: ${apiResponse.message}", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//        }
+
+
+
         viewModel.login(loginRequest).observe(this) { apiResponse ->
             when (apiResponse.status) {
+
                 Status.LOADING -> AppUtil.startLoader(this@LoginActivity)
                 Status.SUCCESS -> {
                     AppUtil.stopLoader()
-                    val loginResponse = apiResponse.data?.body()?.data
-                    if (loginResponse != null) {
-                        Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
-                        // saving token
-                        sessionManager.saveToken(AppConstants.Bearer + " " +  loginResponse.token)
-                        AppConstants.AUTH_TOKEN = sessionManager.getToken().toString()
+                    val retrofitResponse = apiResponse.data  // Response<BaseResponse<LoginResponseModel>>
+                    if (retrofitResponse != null) {
+                        if (retrofitResponse.isSuccessful && retrofitResponse.body() != null) {
+                            val baseResponse = retrofitResponse.body()!!
 
-                        // saving user info
-                        sessionManager.userInfo(Gson().toJson(loginResponse))
+                            // ALWAYS show server message
+                            Toast.makeText(this, baseResponse.message, Toast.LENGTH_SHORT).show()
+                            // Only continue if backend success = true
+                            if (baseResponse.success) {
 
-                        //  getting user info
-                        AppConstants.userData =Gson().fromJson( sessionManager.getUserInfo(), LoginResponseModel::class.java)
+                                val loginResponse = baseResponse.data
+                                if (loginResponse != null) {
 
-                        if(AppConstants.userData!!.userType.equals("User")){
-                            startActivity(Intent(this@LoginActivity, MainDashBoardActivity::class.java))
-                            finish()
-                        }else if (AppConstants.userData!!.userType.equals("Admin")){
-                            startActivity(Intent(this@LoginActivity, AdminDashBoardActivity::class.java))
-                            finish()
+                                    // Save token & user info
+                                    sessionManager.saveToken(AppConstants.Bearer + " " + loginResponse.token)
+                                    AppConstants.AUTH_TOKEN = sessionManager.getToken().toString()
+                                    sessionManager.userInfo(Gson().toJson(loginResponse))
+                                    AppConstants.userData = Gson().fromJson(sessionManager.getUserInfo(), LoginResponseModel::class.java)
+
+                                    // Navigate based on user type
+                                    when (AppConstants.userData!!.userType) {
+                                        "User" -> startActivity(Intent(this, MainDashBoardActivity::class.java))
+                                        "Admin" -> startActivity(Intent(this, AdminDashBoardActivity::class.java))
+                                    }
+
+                                    finish()
+                                }
+                            }
+
+                        } else {
+
+                            val errorJson = retrofitResponse.errorBody()?.string()
+                            val errorResponse = try {
+                                Gson().fromJson(errorJson, BaseResponse::class.java)
+                            } catch (e: Exception) {
+                                null
+                            }
+
+                            val msg = errorResponse?.message ?: "Login failed"
+                            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
                         }
                     }
-
                 }
 
                 Status.ERROR -> {
                     AppUtil.stopLoader()
-                    Toast.makeText(this, "Login Failed: ${apiResponse.message}", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(this, apiResponse.message ?: "Network Error", Toast.LENGTH_SHORT).show()
                 }
             }
         }
+
+
     }
 }

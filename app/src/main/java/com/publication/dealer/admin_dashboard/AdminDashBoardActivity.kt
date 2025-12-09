@@ -16,12 +16,14 @@ import com.google.gson.Gson
 import com.publication.dealer.R
 import com.publication.dealer.SessionManager
 import com.publication.dealer.create_user.CreateUserActivity
+import com.publication.dealer.create_user.model.SignUpResponseModel
 import com.publication.dealer.create_user.viewmodel.SignUpViewModel
 import com.publication.dealer.databinding.ActivityAdminDashBoardBinding
 import com.publication.dealer.inactivate_user.model.InactivateUserRequest
 import com.publication.dealer.inactivate_user.viewmodel.InactivateUserViewModel
 import com.publication.dealer.login.model.LoginResponseModel
 import com.publication.dealer.network.Status
+import com.publication.dealer.network.retofit.BaseResponse
 import com.publication.dealer.reset_password.model.ResetPasswordRequest
 import com.publication.dealer.reset_password.view_model.ResetPasswordViewModel
 import com.publication.dealer.splash.SplashActivity
@@ -143,22 +145,53 @@ class AdminDashBoardActivity : AppCompatActivity() {
             resetUserID = userIdToReset
         )
 
-        viewModel.resetPassword(request).observe(this) { result ->
-            when (result.status) {
+
+
+        viewModel.resetPassword(request).observe(this) { apiResponse ->
+            when (apiResponse.status) {
                 Status.LOADING -> AppUtil.startLoader(this)
 
                 Status.SUCCESS -> {
                     AppUtil.stopLoader()
-                    Toast.makeText(this, result.data ?: "Success", Toast.LENGTH_LONG).show()
-                    dialog.dismiss()
+
+                    val retrofitResponse = apiResponse.data // Response<BaseResponse<SignUpResponseModel>>
+
+                    if (retrofitResponse != null) {
+
+                        // Parse either body() or errorBody() correctly
+                        val baseResponse: BaseResponse<Boolean> = if (retrofitResponse.isSuccessful && retrofitResponse.body() != null) {
+                            retrofitResponse.body()!!
+                        } else {
+                            val errorJson = retrofitResponse.errorBody()?.string() ?: "{}"
+                            try {
+                                Gson().fromJson(errorJson, BaseResponse::class.java) as BaseResponse<Boolean>
+                            } catch (e: Exception) {
+                                BaseResponse(
+                                    code = retrofitResponse.code(),
+                                    message = "Something went wrong",
+                                    success = false,
+                                    data = null
+                                )
+                            }
+                        }
+
+                        // ALWAYS show API message
+                        Toast.makeText(this, baseResponse.message, Toast.LENGTH_LONG).show()
+
+                        // If success, dismiss dialog
+                        if (baseResponse.success == true) {
+                            dialog.dismiss()
+                        }
+                    }
                 }
 
                 Status.ERROR -> {
                     AppUtil.stopLoader()
-                    Toast.makeText(this, result.message ?: "Failed", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, apiResponse.message ?: "Network Error", Toast.LENGTH_LONG).show()
                 }
             }
         }
+
     }
 
 
@@ -215,19 +248,65 @@ class AdminDashBoardActivity : AppCompatActivity() {
             userID = userIdToReset
         )
 
-        viewModelInactivate.inactivateUser(request).observe(this) { result ->
-            when (result.status) {
+//        viewModelInactivate.inactivateUser(request).observe(this) { result ->
+//            when (result.status) {
+//                Status.LOADING -> AppUtil.startLoader(this)
+//
+//                Status.SUCCESS -> {
+//                    AppUtil.stopLoader()
+//                    Toast.makeText(this, result.data ?: "Success", Toast.LENGTH_LONG).show()
+//                    dialog.dismiss()
+//                }
+//
+//                Status.ERROR -> {
+//                    AppUtil.stopLoader()
+//                    Toast.makeText(this, result.message ?: "Failed", Toast.LENGTH_LONG).show()
+//                }
+//            }
+//        }
+
+
+        viewModelInactivate.inactivateUser(request).observe(this) { apiResponse ->
+            when (apiResponse.status) {
                 Status.LOADING -> AppUtil.startLoader(this)
 
                 Status.SUCCESS -> {
                     AppUtil.stopLoader()
-                    Toast.makeText(this, result.data ?: "Success", Toast.LENGTH_LONG).show()
-                    dialog.dismiss()
+
+                    val retrofitResponse = apiResponse.data // Response<BaseResponse<SignUpResponseModel>>
+
+                    if (retrofitResponse != null) {
+
+                        // Parse either body() or errorBody() correctly
+                        val baseResponse: BaseResponse<Boolean> = if (retrofitResponse.isSuccessful && retrofitResponse.body() != null) {
+                            retrofitResponse.body()!!
+                        } else {
+                            val errorJson = retrofitResponse.errorBody()?.string() ?: "{}"
+                            try {
+                                Gson().fromJson(errorJson, BaseResponse::class.java) as BaseResponse<Boolean>
+                            } catch (e: Exception) {
+                                BaseResponse(
+                                    code = retrofitResponse.code(),
+                                    message = "Something went wrong",
+                                    success = false,
+                                    data = null
+                                )
+                            }
+                        }
+
+                        // ALWAYS show API message
+                        Toast.makeText(this, baseResponse.message, Toast.LENGTH_LONG).show()
+
+                        // If success, dismiss dialog
+                        if (baseResponse.success == true) {
+                            dialog.dismiss()
+                        }
+                    }
                 }
 
                 Status.ERROR -> {
                     AppUtil.stopLoader()
-                    Toast.makeText(this, result.message ?: "Failed", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, apiResponse.message ?: "Network Error", Toast.LENGTH_LONG).show()
                 }
             }
         }

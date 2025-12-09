@@ -1,6 +1,7 @@
 package com.publication.dealer.network.repo
 
 import com.publication.dealer.create_user.model.SignUpRequestModel
+import com.publication.dealer.create_user.model.SignUpResponseModel
 import com.publication.dealer.inactivate_user.model.InactivateUserRequest
 import com.publication.dealer.user_dashboard.model.DashBoardRequestModel
 import com.publication.dealer.user_dashboard.model.DashBoardResponseData
@@ -25,15 +26,15 @@ class Repository(private val api: ApiInterface) {
         return api.dashBoardData(dashBoardRequestModel)
     }
 
-    suspend fun signUp(signUpRequest: SignUpRequestModel): Response<ResponseBody> {
+    suspend fun signUp(signUpRequest: SignUpRequestModel): Response<BaseResponse<Boolean>> {
         return api.signUp(signUpRequest)
     }
 
-    suspend fun resetPassword(request: ResetPasswordRequest): Response<ResponseBody> {
+    suspend fun resetPassword(request: ResetPasswordRequest): Response<BaseResponse<Boolean>> {
         return api.resetPassword(request)
     }
 
-    suspend fun inactivateUser(request: InactivateUserRequest): Response<ResponseBody> {
+    suspend fun inactivateUser(request: InactivateUserRequest): Response<BaseResponse<Boolean>> {
         return api.inactivateUser(request)
     }
 
