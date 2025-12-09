@@ -6,53 +6,129 @@
     android:orientation="vertical"
     android:id="@+id/mainLayout"
     android:background="@color/background_light">
-    <RelativeLayout
-        android:background="@color/primary_color"
+<!--    <RelativeLayout-->
+
+<!--        -->
+<!--        -->
+<!--        android:background="@color/primary_color"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="?actionBarSize">-->
+
+<!--        <TextView-->
+<!--            android:layout_marginStart="12dp"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:text="@string/app_name"-->
+<!--            android:textSize="18sp"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"/>-->
+
+
+<!--        &lt;!&ndash; Horizontal layout for button + image &ndash;&gt;-->
+<!--&lt;!&ndash;        <LinearLayout&ndash;&gt;-->
+<!--&lt;!&ndash;            android:orientation="horizontal"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_centerVertical="true"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_alignParentEnd="true"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:gravity="center_vertical"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:paddingEnd="12dp">&ndash;&gt;-->
+
+
+<!--            <androidx.appcompat.widget.AppCompatButton-->
+<!--                android:id="@+id/btnUpdateProfile"-->
+<!--                android:layout_width="60dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Update Profile"-->
+<!--                android:textSize="12sp"-->
+<!--                android:textStyle="bold"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:background="@drawable/button_primary"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:layout_marginEnd="8dp"/>-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/logOut"-->
+<!--                android:backgroundTint="@color/white"-->
+<!--                android:background="@drawable/logout"-->
+<!--                android:layout_width="20dp"-->
+<!--                android:layout_height="20dp"/>-->
+
+<!--&lt;!&ndash;        </LinearLayout>&ndash;&gt;-->
+
+<!--    </RelativeLayout>-->
+
+
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:weightSum="3"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize">
+        android:layout_height="100dp">
 
-        <TextView
-            android:layout_marginStart="12dp"
-            android:layout_centerVertical="true"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:text="@string/app_name"
-            android:textSize="18sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <!-- Horizontal layout for button + image -->
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:paddingEnd="12dp">
+            android:gravity="center|start"
+            android:layout_weight="0.7"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnUpdateProfile"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:text="Update Profile"
-                android:textSize="12sp"
+            <ImageView
+                android:background="@drawable/logo"
+                android:layout_width="80dp"
+                android:layout_height="80dp"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="start|center"
+            android:orientation="vertical"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <TextView
                 android:textStyle="bold"
-                android:textColor="@color/white"
-                android:background="@drawable/button_primary"
-                android:textAllCaps="false"
-                android:layout_marginEnd="8dp"/>
+                android:textSize="16sp"
+                android:id="@+id/userName"
+                android:textColor="@color/primary_color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:textStyle="normal"
+                android:textSize="14sp"
+                android:id="@+id/mobileNumber"
+                android:textColor="@color/primary_color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_weight="0.3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/option"
+                android:background="@drawable/more"
+                android:layout_width="20dp"
+                android:layout_height="20dp"/>
 
             <ImageView
                 android:id="@+id/logOut"
-                android:backgroundTint="@color/white"
+                android:visibility="gone"
                 android:background="@drawable/logout"
                 android:layout_width="20dp"
                 android:layout_height="20dp"/>
 
         </LinearLayout>
 
-    </RelativeLayout>
+
+    </LinearLayout>
 
 
     <!-- Compact Date Selection Row -->
@@ -113,8 +189,6 @@
             />
 
     </LinearLayout>
-
-
 
     <!-- Content Area -->
     <RelativeLayout

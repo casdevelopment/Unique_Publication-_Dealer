@@ -17,7 +17,11 @@ import com.publication.dealer.util.AppUtil
 import com.google.gson.Gson
 import com.publication.dealer.admin_dashboard.AdminDashBoardActivity
 import com.publication.dealer.login.model.LoginResponseModel
+<<<<<<< HEAD
 import com.publication.dealer.network.retofit.BaseResponse
+=======
+import com.publication.dealer.user_dashboard.GraphDashBoardActivity
+>>>>>>> master
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -166,6 +170,13 @@ class LoginActivity : AppCompatActivity() {
 
                             val msg = errorResponse?.message ?: "Login failed"
                             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+
+//                        if(AppConstants.userData!!.userType.equals("User")){
+//                            startActivity(Intent(this@LoginActivity, GraphDashBoardActivity::class.java))
+//                            finish()
+//                        }else if (AppConstants.userData!!.userType.equals("Admin")){
+//                            // open Admin Dash board
+
                         }
                     }
                 }

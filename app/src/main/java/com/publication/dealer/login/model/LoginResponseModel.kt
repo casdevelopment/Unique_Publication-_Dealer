@@ -7,13 +7,13 @@ data class LoginResponseModel(
     val partyCode: Int?=null,
     val sellerType: String?=null,
     val account_ID: String?=null,
+
     val token: String?=null,
     val mobileNumber: String?=null,
 
     val account_Name: String?=null,
     val address: String?=null,
     val partyGroup: String?=null
-
 
 )
 
