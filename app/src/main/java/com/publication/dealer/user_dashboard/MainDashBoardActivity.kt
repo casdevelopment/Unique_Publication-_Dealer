@@ -21,6 +21,7 @@ import com.publication.dealer.R
 import com.publication.dealer.SessionManager
 import com.publication.dealer.network.Status
 import com.publication.dealer.splash.SplashActivity
+import com.publication.dealer.update_user_profile.UpdateUserProfileActivity
 import com.publication.dealer.user_dashboard.adapter.DashBoardAdapter
 import com.publication.dealer.user_dashboard.model.DashBoardRequestModel
 import com.publication.dealer.user_dashboard.model.DashBoardResponseData
@@ -71,10 +72,17 @@ class MainDashBoardActivity : AppCompatActivity() {
                 fetchLedgerData()
             }
 
+            btnUpdateProfile.setOnClickListener{
+                startActivity(Intent(this@MainDashBoardActivity, UpdateUserProfileActivity::class.java))
+                finish()
+            }
 
-            logOut.setOnClickListener { sessionManager.logout()
+
+             logOut.setOnClickListener {
+                 sessionManager.logout()
                 startActivity(Intent(this@MainDashBoardActivity, SplashActivity::class.java))
-                finish()}
+                finish()
+             }
         }
     }
 

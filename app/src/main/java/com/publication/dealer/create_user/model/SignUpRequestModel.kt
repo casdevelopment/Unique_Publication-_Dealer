@@ -17,7 +17,6 @@ data class SignUpRequestModel(
     val postalCode: Int,
     val address: String,
 
-
     val password: String,
 
 )
