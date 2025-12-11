@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_margin="4dp"
     android:background="@color/background_light"
@@ -19,15 +20,26 @@
         android:layout_height="100dp">
 
         <LinearLayout
-            android:gravity="center|start"
+            android:gravity="center"
             android:layout_weight="0.7"
             android:layout_width="0dp"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:background="@drawable/logo"
-                android:layout_width="80dp"
-                android:layout_height="80dp"/>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/profileImage"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/ic_user_placeholder"
+                android:scaleType="centerCrop"
+                android:contentDescription="Profile Picture"
+                android:background="@drawable/profile_circle_bg"
+                android:padding="2dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:shapeAppearanceOverlay="@style/CircleImageView"
+                android:layout_gravity="center" />
+
 
 
         </LinearLayout>
@@ -99,6 +111,12 @@
                 android:id="@+id/logOut"
                 android:visibility="gone"
                 android:background="@drawable/logout"
+                android:layout_width="20dp"
+                android:layout_height="20dp"/>
+            <ImageView
+                android:id="@+id/profile"
+                android:visibility="gone"
+                android:background="@drawable/ic_user_placeholder"
                 android:layout_width="20dp"
                 android:layout_height="20dp"/>
 

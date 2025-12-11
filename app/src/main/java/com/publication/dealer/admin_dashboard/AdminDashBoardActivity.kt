@@ -5,13 +5,18 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.ContextThemeWrapper
+import androidx.appcompat.widget.PopupMenu
 import com.google.gson.Gson
 import com.publication.dealer.R
 import com.publication.dealer.SessionManager
@@ -42,6 +47,8 @@ class AdminDashBoardActivity : AppCompatActivity() {
 
     private val sessionManager: SessionManager by inject()
 
+    private lateinit var popupMenu: PopupMenu
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -51,6 +58,11 @@ class AdminDashBoardActivity : AppCompatActivity() {
 
         setupClickListeners()
         showAdminDetails()
+        setupPopupMenu()
+        binding.option.setOnClickListener {
+            Log.v("option","option click")
+            popupMenu.show()
+        }
     }
 
     private fun setupClickListeners() {
@@ -73,10 +85,6 @@ class AdminDashBoardActivity : AppCompatActivity() {
                 openInactivateUserDialog()
             }
 
-
-            logOut.setOnClickListener { sessionManager.logout()
-                startActivity(Intent(this@AdminDashBoardActivity, SplashActivity::class.java))
-                finish()}
         }
     }
 
@@ -104,6 +112,7 @@ class AdminDashBoardActivity : AppCompatActivity() {
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         val etUserId = dialog.findViewById<EditText>(R.id.etUserId)
+        val userIdError = dialog.findViewById<TextView>(R.id.userIdError)
         val btnSubmit = dialog.findViewById<Button>(R.id.btnSubmit)
         val btnCancel = dialog.findViewById<Button>(R.id.btnCancel)
 
@@ -113,10 +122,13 @@ class AdminDashBoardActivity : AppCompatActivity() {
 
         btnSubmit.setOnClickListener {
 
+            userIdError.visibility = View.GONE
+
             val userIdStr = etUserId.text.toString().trim()
 
             if (userIdStr.isEmpty()) {
-                etUserId.error = "User id required"
+                userIdError.visibility = View.VISIBLE
+                userIdError.setText("User id required")
                 return@setOnClickListener
             }
             callResetApi(userIdStr,dialog) // pass as Int
@@ -207,6 +219,7 @@ class AdminDashBoardActivity : AppCompatActivity() {
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         val etUserId = dialog.findViewById<EditText>(R.id.etUserId)
+        val userIdError = dialog.findViewById<TextView>(R.id.userIdError)
         val btnConfirm = dialog.findViewById<Button>(R.id.btnConfirm)
         val btnCancel = dialog.findViewById<Button>(R.id.btnCancel)
 
@@ -216,10 +229,13 @@ class AdminDashBoardActivity : AppCompatActivity() {
 
         btnConfirm.setOnClickListener {
 
+            userIdError.visibility = View.GONE
+
             val userIdStr = etUserId.text.toString().trim()
 
             if (userIdStr.isEmpty()) {
-                etUserId.error = "User id required"
+                userIdError.visibility = View.VISIBLE
+                userIdError.setText("User id required")
                 return@setOnClickListener
             }
             callInactivateApi(userIdStr,dialog) // pass as Int
@@ -310,6 +326,41 @@ class AdminDashBoardActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+
+
+    private fun setupPopupMenu() {
+        // Create ContextThemeWrapper for styling (optional)
+        val wrapper = ContextThemeWrapper(this, R.style.PopupMenu)
+        popupMenu = PopupMenu(wrapper, binding.option)
+
+        // Inflate the menu
+        popupMenu.menuInflater.inflate(R.menu.options_menu_admin, popupMenu.menu)
+
+        // Handle menu item clicks
+        popupMenu.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.action_logout -> {
+                    logout()
+                    true
+                }
+                else -> false
+            }
+        }
+    }
+
+    private fun logout() {
+        AlertDialog.Builder(this@AdminDashBoardActivity)
+            .setTitle("Logout")
+            .setMessage("Are you sure you want to logout?")
+            .setPositiveButton("Yes") { dialog, which ->
+                sessionManager.logout()
+                startActivity(Intent(this@AdminDashBoardActivity, SplashActivity::class.java))
+                finish()
+            }
+            .setNegativeButton("No", null)
+            .show()
     }
 
 }

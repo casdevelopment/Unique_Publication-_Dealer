@@ -4,6 +4,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -17,9 +21,22 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".update_user_profile.UpdateUserProfileActivity"
+            android:name=".update_user_password.UpdateUserPasswordActivity"
+            android:exported="false" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
             android:exported="false"
-            />
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <activity
+            android:name=".update_user_profile.UpdateUserProfileActivity"
+            android:exported="false" />
         <activity
             android:name=".create_user.CreateUserActivity"
             android:exported="false" />
@@ -29,11 +46,9 @@
         <activity
             android:name=".user_dashboard.MainDashBoardActivity"
             android:exported="false" />
-
         <activity
             android:name=".user_dashboard.GraphDashBoardActivity"
             android:exported="false" />
-
         <activity
             android:name=".login.LoginActivity"
             android:exported="false" />

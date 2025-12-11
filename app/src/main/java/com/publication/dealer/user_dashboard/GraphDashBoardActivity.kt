@@ -1,15 +1,21 @@
 package com.publication.dealer.user_dashboard
 
+import com.bumptech.glide.Glide
+
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.content.FileProvider
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
@@ -21,8 +27,11 @@ import com.google.gson.Gson
 import com.publication.dealer.R
 import com.publication.dealer.SessionManager
 import com.publication.dealer.databinding.ActivityGraphDashBoardBinding
+import com.publication.dealer.image_upload.viewmodel.UploadImageViewModel
 import com.publication.dealer.network.Status
 import com.publication.dealer.splash.SplashActivity
+import com.publication.dealer.update_user_password.UpdateUserPasswordActivity
+import com.publication.dealer.update_user_profile.UpdateUserProfileActivity
 import com.publication.dealer.user_dashboard.model.DashBoardRequestModel
 import com.publication.dealer.user_dashboard.model.DashBoardResponseData
 import com.publication.dealer.user_dashboard.viewmodel.DashBoardViewModel
@@ -33,6 +42,8 @@ import org.json.JSONArray
 import org.json.JSONObject
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.io.File
+import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -41,13 +52,38 @@ class GraphDashBoardActivity : AppCompatActivity() {
     lateinit var binding: ActivityGraphDashBoardBinding
     private val sessionManager: SessionManager by inject()
     private val viewModel: DashBoardViewModel by viewModel()
+    private val imageviewModel: UploadImageViewModel by viewModel()
     private lateinit var popupMenu: PopupMenu
+
+    private var cameraImageUri: Uri? = null
+
+    private val galleryLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            uri?.let {
+                showImage(it)
+                uploadSelectedImage(it)
+            }
+        }
+
+    private val cameraLauncher =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+            if (success && cameraImageUri != null) {
+                showImage(cameraImageUri!!)
+                uploadSelectedImage(cameraImageUri!!)
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityGraphDashBoardBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+        binding.profileImage.setOnClickListener {
+            showImagePickerDialog()
+        }
+
 
         setUserData()
         setupBarChart()
@@ -431,20 +467,103 @@ class GraphDashBoardActivity : AppCompatActivity() {
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_update_password -> {
-                    //updatePassword()
+                    navigateToUpdatePasswordActivity()
                     true
                 }
                 R.id.action_logout -> {
                     logout()
                     true
                 }
+                R.id.action_profile -> {
+                    navigateToUpdateProfileActivity()
+                    true
+                }
                 else -> false
             }
         }
-
-        // The click listener is already set in setupClickListeners()
-        // So no need to set it here again
     }
+
+    private fun showImagePickerDialog() {
+        val dialog = AlertDialog.Builder(this)
+        dialog.setTitle("Select Option")
+        dialog.setItems(arrayOf("Camera", "Gallery")) { _, which ->
+            when (which) {
+                0 -> openCamera()
+                1 -> openGallery()
+            }
+        }
+        dialog.show()
+    }
+
+    private fun openGallery() {
+        galleryLauncher.launch("image/*")
+    }
+
+    private fun openCamera() {
+        val imageFile = File(cacheDir, "temp_image_${System.currentTimeMillis()}.jpg")
+        cameraImageUri = FileProvider.getUriForFile(
+            this,
+            "$packageName.fileprovider",
+            imageFile
+        )
+
+        cameraImageUri?.let { safeUri ->
+            cameraLauncher.launch(safeUri)
+        }
+    }
+
+    private fun showImage(uri: Uri) {
+        Glide.with(this)
+            .load(uri)
+            .centerCrop()
+            .into(binding.profileImage)
+    }
+
+
+
+
+
+
+    private fun uploadSelectedImage(uri: Uri) {
+        val userId = AppConstants.userData?.userId ?: return
+
+        val file = getFileFromUri(this, uri) // Convert Uri to File
+
+        imageviewModel.uploadUserImage(userId, file).observe(this) { apiResponse ->
+            when (apiResponse.status) {
+                Status.LOADING -> AppUtil.startLoader(this)
+                Status.SUCCESS -> {
+                    AppUtil.stopLoader()
+                    val baseResponse = apiResponse.data?.body()
+                    if (baseResponse?.success == true) {
+                        Toast.makeText(this, "Image uploaded successfully", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this, baseResponse?.message ?: "Upload failed", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                Status.ERROR -> {
+                    AppUtil.stopLoader()
+                    Toast.makeText(this, apiResponse.message ?: "Network Error", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+
+    fun getFileFromUri(context: Context, uri: Uri): File {
+        val inputStream = context.contentResolver.openInputStream(uri)!!
+        val tempFile = File(context.cacheDir, "upload_${System.currentTimeMillis()}.jpg")
+        val outputStream = FileOutputStream(tempFile)
+
+        inputStream.copyTo(outputStream)
+
+        inputStream.close()
+        outputStream.close()
+
+        return tempFile
+    }
+
+
 
     private fun logout() {
         AlertDialog.Builder(this@GraphDashBoardActivity)
@@ -457,5 +576,18 @@ class GraphDashBoardActivity : AppCompatActivity() {
             }
             .setNegativeButton("No", null)
             .show()
+    }
+
+    private fun navigateToUpdateProfileActivity() {
+
+        startActivity(Intent(this@GraphDashBoardActivity, UpdateUserProfileActivity::class.java))
+        finish()
+
+    }
+    private fun navigateToUpdatePasswordActivity() {
+
+        startActivity(Intent(this@GraphDashBoardActivity, UpdateUserPasswordActivity::class.java))
+        finish()
+
     }
 }

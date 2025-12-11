@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.publication.dealer.R
 import com.publication.dealer.SessionManager
+import com.publication.dealer.admin_dashboard.AdminDashBoardActivity
 import com.publication.dealer.network.Status
 import com.publication.dealer.splash.SplashActivity
 import com.publication.dealer.update_user_profile.UpdateUserProfileActivity
@@ -60,16 +61,16 @@ class MainDashBoardActivity : AppCompatActivity() {
         }
         updateDateDisplays()
         setupClickListeners()
-        setUserData()
-        setupPopupMenu()
+//        setUserData()
+//        setupPopupMenu()
     }
 
-    private fun setUserData() {
-        with(binding){
-            userName.text= AppConstants.userData?.userName ?: "N/A"
-            mobileNumber.text= AppConstants.userData?.mobileNumber ?: "N/A"
-        }
-    }
+//    private fun setUserData() {
+//        with(binding){
+//            userName.text= AppConstants.userData?.userName ?: "N/A"
+//            mobileNumber.text= AppConstants.userData?.mobileNumber ?: "N/A"
+//        }
+//    }
 
     private fun setupClickListeners() {
 
@@ -86,22 +87,10 @@ class MainDashBoardActivity : AppCompatActivity() {
                 fetchLedgerData()
             }
 
-//            btnUpdateProfile.setOnClickListener{
-//                startActivity(Intent(this@MainDashBoardActivity, UpdateUserProfileActivity::class.java))
-//                finish()
-//            }
-
-
-             logOut.setOnClickListener {
-                 sessionManager.logout()
-                startActivity(Intent(this@MainDashBoardActivity, SplashActivity::class.java))
-
-                finish()}
-
-            option.setOnClickListener {
-                Log.v("option","option click")
-                popupMenu.show()
+            backBtn.setOnClickListener {
+                navigateToGraphDashboard()
             }
+
         }
     }
 
@@ -243,43 +232,41 @@ class MainDashBoardActivity : AppCompatActivity() {
 
     }
 
-    private fun setupPopupMenu() {
-        // Create ContextThemeWrapper for styling (optional)
-        val wrapper = ContextThemeWrapper(this, R.style.PopupMenu)
-        popupMenu = PopupMenu(wrapper, binding.option)
+//    private fun setupPopupMenu() {
+//        // Create ContextThemeWrapper for styling (optional)
+//        val wrapper = ContextThemeWrapper(this, R.style.PopupMenu)
+//        popupMenu = PopupMenu(wrapper, binding.option)
+//
+//        // Inflate the menu
+//        popupMenu.menuInflater.inflate(R.menu.options_menu, popupMenu.menu)
+//
+//        // Handle menu item clicks
+//        popupMenu.setOnMenuItemClickListener { menuItem ->
+//            when (menuItem.itemId) {
+//                R.id.action_update_password -> {
+//                    //updatePassword()
+//                    true
+//                }
+//                R.id.action_logout -> {
+//                    logout()
+//                    true
+//                }
+//                else -> false
+//            }
+//        }
+//
+//        // The click listener is already set in setupClickListeners()
+//        // So no need to set it here again
+//    }
 
-        // Inflate the menu
-        popupMenu.menuInflater.inflate(R.menu.options_menu, popupMenu.menu)
+    private fun navigateToGraphDashboard() {
 
-        // Handle menu item clicks
-        popupMenu.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.action_update_password -> {
-                    //updatePassword()
-                    true
-                }
-                R.id.action_logout -> {
-                    logout()
-                    true
-                }
-                else -> false
-            }
-        }
-
-        // The click listener is already set in setupClickListeners()
-        // So no need to set it here again
+        startActivity(Intent(this@MainDashBoardActivity, GraphDashBoardActivity::class.java))
+        finish()
     }
 
-    private fun logout() {
-        AlertDialog.Builder(this@MainDashBoardActivity)
-            .setTitle("Logout")
-            .setMessage("Are you sure you want to logout?")
-            .setPositiveButton("Yes") { dialog, which ->
-                sessionManager.logout()
-                startActivity(Intent(this@MainDashBoardActivity, SplashActivity::class.java))
-                finish()
-            }
-            .setNegativeButton("No", null)
-            .show()
+    override fun onBackPressed() {
+        super.onBackPressed()
+        navigateToGraphDashboard()
     }
 }

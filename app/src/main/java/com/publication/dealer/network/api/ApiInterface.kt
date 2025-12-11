@@ -9,11 +9,15 @@ import com.publication.dealer.login.model.LoginRequestModel
 import com.publication.dealer.login.model.LoginResponseModel
 import com.publication.dealer.network.retofit.BaseResponse
 import com.publication.dealer.reset_password.model.ResetPasswordRequest
-import okhttp3.ResponseBody
-
+import com.publication.dealer.update_user_password.model.UpdateUserPasswordRequestModel
+import com.publication.dealer.update_user_profile.model.UpdateUserModel
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 
 interface ApiInterface {
 
@@ -35,7 +39,14 @@ interface ApiInterface {
     @POST("Dealer/inactivate-user")
     suspend fun inactivateUser(@Body request: InactivateUserRequest): Response<BaseResponse<Boolean>>
 
+    @POST("Dealer/update-user")
+    suspend fun updateUser(@Body updateUserRequest: UpdateUserModel): Response<BaseResponse<Boolean>>
 
 
+    @Multipart
+        @POST("Dealer/upload-shop-image")
+        suspend fun uploadUserImage(@Part("userId") userId: RequestBody, @Part file: MultipartBody.Part): Response<BaseResponse<Boolean>>
 
+    @POST("Dealer/change-password")
+    suspend fun updatePassword(@Body updatePasswordRequest: UpdateUserPasswordRequestModel): Response<BaseResponse<Boolean>>
 }

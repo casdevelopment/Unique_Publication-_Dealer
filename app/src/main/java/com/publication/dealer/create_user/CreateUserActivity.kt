@@ -16,6 +16,7 @@ import com.publication.dealer.create_user.viewmodel.SignUpViewModel
 import com.publication.dealer.databinding.ActivityCreateUserBinding
 import com.publication.dealer.network.Status
 import com.publication.dealer.network.retofit.BaseResponse
+import com.publication.dealer.util.AppConstants
 import com.publication.dealer.util.AppUtil
 import okhttp3.ResponseBody
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -26,16 +27,7 @@ class CreateUserActivity : AppCompatActivity() {
     private val viewModel: SignUpViewModel by viewModel()
     private lateinit var binding: ActivityCreateUserBinding
 
-    private var selectedImageUri: Uri? = null
 
-    private val pickImageLauncher = registerForActivityResult(
-        ActivityResultContracts.GetContent()
-    ) { uri ->
-        if (uri != null) {
-            selectedImageUri = uri
-            binding.eProfileImage.setImageURI(uri)
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +39,7 @@ class CreateUserActivity : AppCompatActivity() {
 
     private fun setupClickListeners() {
         with(binding) {
-            signupBtn.setOnClickListener {
+            addUser.setOnClickListener {
                 if (validateInputs()) callSignUpApi()
             }
 
@@ -55,9 +47,7 @@ class CreateUserActivity : AppCompatActivity() {
                 navigateToAdminDashboard()
             }
 
-            binding.eProfileImage.setOnClickListener {
-                pickImageLauncher.launch("image/*")
-            }
+
         }
     }
 
@@ -76,90 +66,70 @@ class CreateUserActivity : AppCompatActivity() {
 
     private fun validateInputs(): Boolean {
         var valid = true
+
+        binding.userIdError.visibility = View.GONE
+        binding.userNameError.visibility = View.GONE
+        binding.mobileNumberError.visibility = View.GONE
+        binding.partyCodeError.visibility = View.GONE
+        binding.passwordError.visibility = View.GONE
+        binding.confirmPasswordError.visibility = View.GONE
+
         val password = binding.etPassword.text.toString().trim()
         val confirm = binding.etConfirmPassword.text.toString().trim()
 
-        if (selectedImageUri == null) {
-            binding.imageError.text = "Add profile image"
-            binding.imageError.visibility = View.VISIBLE
 
-            binding.eProfileImage.strokeColor = ContextCompat.getColorStateList(this, android.R.color.holo_red_dark)
-            binding.eProfileImage.strokeWidth = 4f
-            valid = false
-        } else {
-            binding.imageError.visibility = View.GONE
-            binding.eProfileImage.strokeWidth = 0f
-        }
+
 
 
 
         if (binding.etUserId.text.toString().trim().isEmpty()) {
-            binding.etUserId.error = "UserId required"
+            binding.userIdError.visibility = View.VISIBLE
+            binding.userIdError.setText ("User id required")
+
             valid = false
         }
 
         if (binding.etUserName.text.toString().trim().isEmpty()) {
-            binding.etUserName.error = "Name required"
+            binding.userNameError.visibility = View.VISIBLE
+            binding.userNameError.setText ("User name required")
             valid = false
         }
 
         if (binding.etPartyCode.text.toString().trim().isEmpty()) {
-            binding.etPartyCode.error = "Party Code required"
+            binding.partyCodeError.visibility = View.VISIBLE
+            binding.partyCodeError.setText ("party Code required")
             valid = false
         }
 
-        if (binding.etMobileNumber1.text.toString().trim().isEmpty()) {
-            binding.etMobileNumber1.error = "Mobile number required"
+        if (binding.etMobileNumber.text.toString().trim().isEmpty()) {
+            binding.mobileNumberError.visibility = View.VISIBLE
+            binding.mobileNumberError.setText ("mobile Number required")
+            valid = false
+        }else if (binding.etMobileNumber.text.toString().trim().length < 11) {
+            binding.mobileNumberError.visibility = View.VISIBLE
+            binding.mobileNumberError.setText ("Mobile number must be at least 11 characters long.")
             valid = false
         }
-
-        if (binding.etUserTown.text.toString().trim().isEmpty()) {
-            binding.etUserTown.error = "Town required"
-            valid = false
-        }
-        if (binding.etUserCity.text.toString().trim().isEmpty()) {
-            binding.etUserCity.error = "City required"
-            valid = false
-        }
-        if (binding.etUserDistrict.text.toString().trim().isEmpty()) {
-            binding.etUserDistrict.error = "District required"
-            valid = false
-        }
-        if (binding.etUserProvince.text.toString().trim().isEmpty()) {
-            binding.etUserProvince.error = "Province required"
-            valid = false
-        }
-
-        if (binding.etUserPostalCode.text.toString().trim().isEmpty()) {
-            binding.etUserPostalCode.error = "Postal Code required"
-            valid = false
-        }
-
-        if (binding.etUserAddress.text.toString().trim().isEmpty()) {
-            binding.etUserAddress.error = "Address required"
-            valid = false
-        }
-
 
         if (password.isEmpty()) {
-            binding.etPassword.error = "Password required"
+            binding.passwordError.visibility = View.VISIBLE
+            binding.passwordError.setText ("password required")
             valid = false
         } else if (password.length < 6) {
-            binding.etPassword.error = "Password must be at least 6 characters"
+            binding.passwordError.visibility = View.VISIBLE
+            binding.passwordError.setText ("Password must greater then 6")
             valid = false
         }
 
-
-
-
-
         if (confirm.isEmpty()) {
-            binding.etConfirmPassword.error = "Enter Password Again"
+            binding.confirmPasswordError.visibility = View.VISIBLE
+            binding.confirmPasswordError.setText ("Write password again")
             valid = false
         }
 
         if (confirm.isNotEmpty() && password != confirm) {
-            binding.etConfirmPassword.error = "Passwords do not match"
+            binding.confirmPasswordError.visibility = View.VISIBLE
+            binding.confirmPasswordError.setText ("Password do not match")
             valid = false
         }
 
@@ -167,29 +137,16 @@ class CreateUserActivity : AppCompatActivity() {
     }
 
 
-    private fun callSignUpApi() {
+   private fun callSignUpApi() {
         val signUpRequest = SignUpRequestModel(
-            profile = "profile string abcdefghijklmnopqrstuvwxyz",
             userId = binding.etUserId.text.toString().trim(),
             userName = binding.etUserName.text.toString().trim(),
             partyCode = binding.etPartyCode.text.toString().trim().toInt(),
-            mobileNumber = binding.etMobileNumber1.text.toString().trim(),
-            mobileNumber2 = binding.etMobileNumber2.text.toString().trim(),
-            mobileNumber3 = binding.etMobileNumber3.text.toString().trim(),
-
-            town = binding.etUserTown.text.toString().trim(),
-            city = binding.etUserCity.text.toString().trim(),
-            district = binding.etUserDistrict.text.toString().trim(),
-            province = binding.etUserProvince.text.toString().trim(),
-
-            postalCode = binding.etUserPostalCode.text.toString().trim().toInt(),
-
-            address = binding.etUserAddress.text.toString().trim(),
-
+            mobileNumber = binding.etMobileNumber.text.toString().trim(),
+            userType = "User",
+            addedBy = AppConstants.userData?.userId ?: "",
             password = binding.etPassword.text.toString().trim(),
-
-        )
-
+            )
 
 
         viewModel.signUp(signUpRequest).observe(this) { apiResponse ->
