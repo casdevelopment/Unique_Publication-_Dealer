@@ -72,18 +72,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="User Id"
-                    android:inputType="text"/>
+                    android:inputType="text"
+                    android:enabled="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/useridError"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/holo_red_dark"
-                android:textSize="12sp"
-                android:visibility="gone"
-                android:layout_marginBottom="7dp"
-                android:layout_marginLeft="10dp"/>
 
             <View
                 android:layout_width="match_parent"
@@ -106,15 +98,6 @@
                     android:inputType="text"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/mobileNumberError"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/holo_red_dark"
-                android:textSize="12sp"
-                android:visibility="gone"
-                android:layout_marginBottom="7dp"
-                android:layout_marginLeft="10dp"/>
 
             <View
                 android:layout_width="match_parent"
@@ -130,7 +113,7 @@
                     android:id="@+id/etMobileNumber2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Second Mobile Number(Optional)"
+                    android:hint="Second Mobile Number"
                     android:inputType="text"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -147,7 +130,7 @@
                     android:id="@+id/etMobileNumber3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Third Mobile Number(Optional)"
+                    android:hint="Third Mobile Number"
                     android:inputType="text"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -156,32 +139,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="6dp"/>
 
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/etRemarks"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="Remarks"
-                                android:inputType="text"/>
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <TextView
-                            android:id="@+id/remarksError"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@android:color/holo_red_dark"
-                            android:textSize="12sp"
-                            android:visibility="gone"
-                            android:layout_marginBottom="7dp"
-                            android:layout_marginLeft="10dp"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="6dp"/>
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -195,16 +152,6 @@
                     android:hint="Town"
                     android:inputType="text"/>
             </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                android:id="@+id/townError"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/holo_red_dark"
-                android:textSize="12sp"
-                android:visibility="gone"
-                android:layout_marginBottom="7dp"
-                android:layout_marginLeft="10dp"/>
 
 
             <View
@@ -225,15 +172,6 @@
                     android:inputType="text"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/cityError"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/holo_red_dark"
-                android:textSize="12sp"
-                android:visibility="gone"
-                android:layout_marginBottom="7dp"
-                android:layout_marginLeft="10dp"/>
 
             <View
                 android:layout_width="match_parent"
@@ -252,16 +190,6 @@
                     android:hint="District"
                     android:inputType="text"/>
             </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                android:id="@+id/districtError"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/holo_red_dark"
-                android:textSize="12sp"
-                android:visibility="gone"
-                android:layout_marginBottom="7dp"
-                android:layout_marginLeft="10dp"/>
 
             <View
                 android:layout_width="match_parent"
@@ -283,17 +211,6 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
-            <TextView
-                android:id="@+id/provinceError"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/holo_red_dark"
-                android:textSize="12sp"
-                android:visibility="gone"
-                android:layout_marginBottom="7dp"
-                android:layout_marginLeft="10dp"/>
-
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="6dp"/>
@@ -311,18 +228,6 @@
                     android:hint="Postal Code"
                     android:inputType="text"/>
             </com.google.android.material.textfield.TextInputLayout>
-
-
-            <TextView
-                android:id="@+id/postalCodeError"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/holo_red_dark"
-                android:textSize="12sp"
-                android:visibility="gone"
-                android:layout_marginBottom="7dp"
-                android:layout_marginLeft="10dp"/>
-
 
 
 

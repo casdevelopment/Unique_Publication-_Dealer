@@ -1,8 +1,10 @@
 package com.publication.dealer.user_dashboard
 
+import android.Manifest
 import com.bumptech.glide.Glide
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -14,7 +16,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.bumptech.glide.signature.ObjectKey
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
@@ -26,6 +31,7 @@ import com.publication.dealer.R
 import com.publication.dealer.SessionManager
 import com.publication.dealer.databinding.ActivityGraphDashBoardBinding
 import com.publication.dealer.image_upload.viewmodel.UploadImageViewModel
+import com.publication.dealer.login.model.LoginResponseModel
 import com.publication.dealer.network.Status
 import com.publication.dealer.splash.SplashActivity
 import com.publication.dealer.update_user_password.UpdateUserPasswordActivity
@@ -37,7 +43,6 @@ import com.publication.dealer.util.AppConstants
 import com.publication.dealer.util.AppUtil
 import com.publication.dealer.util.showToast
 import org.json.JSONArray
-import org.json.JSONObject
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
@@ -55,18 +60,30 @@ class GraphDashBoardActivity : AppCompatActivity() {
 
     private var cameraImageUri: Uri? = null
 
+    private val CAMERA_REQUEST_CODE = 101
+
     private val galleryLauncher =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             uri?.let {
-                showImage(it)
                 uploadSelectedImage(it)
             }
         }
 
+    private fun checkCameraPermissionAndOpenCamera() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.CAMERA),
+                CAMERA_REQUEST_CODE
+            )
+        } else {
+            openCamera()
+        }
+    }
+
     private val cameraLauncher =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
             if (success && cameraImageUri != null) {
-                showImage(cameraImageUri!!)
                 uploadSelectedImage(cameraImageUri!!)
             }
         }
@@ -76,6 +93,9 @@ class GraphDashBoardActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityGraphDashBoardBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        AppConstants.userData =
+            Gson().fromJson(sessionManager.getUserInfo(), LoginResponseModel::class.java)
 
 
         binding.profileImage.setOnClickListener {
@@ -97,14 +117,26 @@ class GraphDashBoardActivity : AppCompatActivity() {
         }
     }
     private fun setUserData() {
-        with(binding){
-            userName.text= AppConstants.userData?.userName ?: "N/A"
-            mobileNumber.text= AppConstants.userData?.mobileNumber ?: "N/A"
-            address.text= AppConstants.userData?.address ?: "N/A"
-            partyGroup.text= AppConstants.userData?.partyGroup ?: "N/A"
-            accountName.text= AppConstants.userData?.account_Name ?: "N/A"
+        with(binding) {
+            userName.text = AppConstants.userData?.userName ?: "N/A"
+            mobileNumber.text = AppConstants.userData?.mobileNumber ?: "N/A"
+            address.text = AppConstants.userData?.address ?: "N/A"
+            partyGroup.text = AppConstants.userData?.partyGroup ?: "N/A"
+            accountName.text = AppConstants.userData?.account_Name ?: "N/A"
+
+            val imageUrl = AppConstants.userData?.shopimageurl
+            if (!imageUrl.isNullOrEmpty()) {
+                Glide.with(this@GraphDashBoardActivity)
+                    .load(imageUrl)
+                    .signature(ObjectKey(System.currentTimeMillis())) // 🔥 KEY LINE
+                    .placeholder(R.drawable.ic_user_placeholder)
+                    .error(R.drawable.ic_user_placeholder)
+                    .centerCrop()
+                    .into(profileImage)
+            }
         }
     }
+
 
     private fun callApi(dashBoardResponseData: DashBoardRequestModel) {
         viewModel.dashBoardData(dashBoardResponseData).observe(this) { apiResponse ->
@@ -486,7 +518,7 @@ class GraphDashBoardActivity : AppCompatActivity() {
         dialog.setTitle("Select Option")
         dialog.setItems(arrayOf("Camera", "Gallery")) { _, which ->
             when (which) {
-                0 -> openCamera()
+                0 -> checkCameraPermissionAndOpenCamera()
                 1 -> openGallery()
             }
         }
@@ -517,35 +549,61 @@ class GraphDashBoardActivity : AppCompatActivity() {
             .into(binding.profileImage)
     }
 
-
-
-
-
-
     private fun uploadSelectedImage(uri: Uri) {
         val userId = AppConstants.userData?.userId ?: return
-
-        val file = getFileFromUri(this, uri) // Convert Uri to File
+        val file = getFileFromUri(this, uri)
 
         imageviewModel.uploadUserImage(userId, file).observe(this) { apiResponse ->
             when (apiResponse.status) {
+
                 Status.LOADING -> AppUtil.startLoader(this)
+
                 Status.SUCCESS -> {
                     AppUtil.stopLoader()
+
                     val baseResponse = apiResponse.data?.body()
+
                     if (baseResponse?.success == true) {
-                        Toast.makeText(this, "Image uploaded successfully", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(this, baseResponse?.message ?: "Upload failed", Toast.LENGTH_SHORT).show()
+
+                        // 1️⃣ Update in-memory user object
+                        AppConstants.userData?.shopimageurl = baseResponse.shopimageurl
+
+                        // 2️⃣ Persist updated user to session (MOST IMPORTANT)
+                        AppConstants.userData?.let { updatedUser ->
+                            sessionManager.userInfo(Gson().toJson(updatedUser))
+                        }
+
+                        // 3️⃣ Load image immediately
+                        baseResponse.shopimageurl?.let { imageUrl ->
+                            Glide.with(this)
+                                .load(imageUrl)
+                                .signature(ObjectKey(System.currentTimeMillis())) // 🔥 cache bust
+                                .placeholder(R.drawable.ic_user_placeholder)
+                                .error(R.drawable.ic_user_placeholder)
+                                .centerCrop()
+                                .into(binding.profileImage)
+                        }
+
+                        Toast.makeText(this, baseResponse.message, Toast.LENGTH_SHORT).show()
+                    }
+                    else {
+                        Toast.makeText(
+                            this,
+                            baseResponse?.message ?: "Upload failed",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
+
                 Status.ERROR -> {
                     AppUtil.stopLoader()
                     Toast.makeText(this, apiResponse.message ?: "Network Error", Toast.LENGTH_SHORT).show()
                 }
             }
         }
+
     }
+
 
 
     fun getFileFromUri(context: Context, uri: Uri): File {

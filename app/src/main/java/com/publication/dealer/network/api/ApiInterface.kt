@@ -2,6 +2,7 @@ package com.publication.dealer.network.api
 
 import com.publication.dealer.create_user.model.SignUpRequestModel
 import com.publication.dealer.create_user.model.SignUpResponseModel
+import com.publication.dealer.image_upload.viewmodel.UploadImageViewModel
 import com.publication.dealer.inactivate_user.model.InactivateUserRequest
 import com.publication.dealer.user_dashboard.model.DashBoardRequestModel
 import com.publication.dealer.user_dashboard.model.DashBoardResponseData
@@ -11,6 +12,7 @@ import com.publication.dealer.network.retofit.BaseResponse
 import com.publication.dealer.reset_password.model.ResetPasswordRequest
 import com.publication.dealer.update_user_password.model.UpdateUserPasswordRequestModel
 import com.publication.dealer.update_user_profile.model.UpdateUserModel
+import com.publication.dealer.user_dashboard.model.ImageUploadResponceModel
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -44,8 +46,11 @@ interface ApiInterface {
 
 
     @Multipart
-        @POST("Dealer/upload-shop-image")
-        suspend fun uploadUserImage(@Part("userId") userId: RequestBody, @Part file: MultipartBody.Part): Response<BaseResponse<Boolean>>
+    @POST("Dealer/upload-shop-image")
+    suspend fun uploadUserImage(
+        @Part("userId") userId: RequestBody,
+        @Part file: MultipartBody.Part
+    ): Response<ImageUploadResponceModel>
 
     @POST("Dealer/change-password")
     suspend fun updatePassword(@Body updatePasswordRequest: UpdateUserPasswordRequestModel): Response<BaseResponse<Boolean>>

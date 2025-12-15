@@ -2,6 +2,7 @@ package com.publication.dealer.network.repo
 
 import com.publication.dealer.create_user.model.SignUpRequestModel
 import com.publication.dealer.create_user.model.SignUpResponseModel
+import com.publication.dealer.image_upload.viewmodel.UploadImageViewModel
 import com.publication.dealer.inactivate_user.model.InactivateUserRequest
 import com.publication.dealer.user_dashboard.model.DashBoardRequestModel
 import com.publication.dealer.user_dashboard.model.DashBoardResponseData
@@ -12,6 +13,7 @@ import com.publication.dealer.network.api.ApiInterface
 import com.publication.dealer.reset_password.model.ResetPasswordRequest
 import com.publication.dealer.update_user_password.model.UpdateUserPasswordRequestModel
 import com.publication.dealer.update_user_profile.model.UpdateUserModel
+import com.publication.dealer.user_dashboard.model.ImageUploadResponceModel
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -48,7 +50,7 @@ class Repository(private val api: ApiInterface) {
     }
 
 
-    suspend fun uploadUserImage(userId: String, file: File): Response<BaseResponse<Boolean>> {
+    suspend fun uploadUserImage(userId: String, file: File): Response<ImageUploadResponceModel> {
         val userIdPart = RequestBody.create("text/plain".toMediaTypeOrNull(), userId)
         val filePart = MultipartBody.Part.createFormData(
             "file",
@@ -57,6 +59,7 @@ class Repository(private val api: ApiInterface) {
         )
         return api.uploadUserImage(userIdPart, filePart)
     }
+
 
 
     suspend fun updatePassword(updatePasswordRequest: UpdateUserPasswordRequestModel): Response<BaseResponse<Boolean>> {

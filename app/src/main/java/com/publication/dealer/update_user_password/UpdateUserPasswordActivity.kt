@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
+import com.publication.dealer.admin_dashboard.AdminDashBoardActivity
 import com.publication.dealer.databinding.ActivityUpdateUserPasswordBinding
 import com.publication.dealer.network.Status
 import com.publication.dealer.network.retofit.BaseResponse
@@ -127,48 +128,54 @@ class UpdateUserPasswordActivity : AppCompatActivity() {
         )
 
 
-        viewModel.updatePassword(updatePasswordRequest).observe(this) { apiResponse ->
-            when (apiResponse.status) {
-                Status.LOADING -> AppUtil.startLoader(this)
+
+        viewModel.updatePassword(updatePasswordRequest).observe(this) { state ->
+
+            when (state.status) {
+
+                Status.LOADING -> {
+                    AppUtil.startLoader(this)
+                }
 
                 Status.SUCCESS -> {
                     AppUtil.stopLoader()
 
-                    val retrofitResponse = apiResponse.data // Response<BaseResponse<SignUpResponseModel>>
+                    val response = state.data ?: run {
+                        Toast.makeText(this, "Empty response", Toast.LENGTH_LONG).show()
+                        return@observe
+                    }
 
-                    if (retrofitResponse != null) {
+                    // ✅ HTTP 2xx
+                    if (response.isSuccessful && response.body() != null) {
 
-                        // Parse either body() or errorBody() correctly
-                        val baseResponse: BaseResponse<Boolean> = if (retrofitResponse.isSuccessful && retrofitResponse.body() != null) {
-                            retrofitResponse.body()!!
-                        } else {
-                            val errorJson = retrofitResponse.errorBody()?.string() ?: "{}"
-                            try {
-                                Gson().fromJson(errorJson, BaseResponse::class.java) as BaseResponse<Boolean>
-                            } catch (e: Exception) {
-                                BaseResponse(
-                                    code = retrofitResponse.code(),
-                                    message = "Something went wrong",
-                                    success = false,
-                                    data = null
-                                )
-                            }
-                        }
+                        val body = response.body()!!
+                        Toast.makeText(this, body.message, Toast.LENGTH_LONG).show()
 
-                        // ALWAYS show API message
-                        Toast.makeText(this, baseResponse.message, Toast.LENGTH_LONG).show()
-
-                        // If success, dismiss dialog
-                        if (baseResponse.success == true) {
-                            startActivity(Intent(this@UpdateUserPasswordActivity, GraphDashBoardActivity::class.java))
+                        if (body.success) {
+                            startActivity(Intent(this, GraphDashBoardActivity::class.java)
+                            )
                             finish()
                         }
+
+                    }
+                    // ❗ HTTP error but API sent message (409, 400, etc)
+                    else {
+                        val errorMsg = try {
+                            val errorJson = response.errorBody()?.string()
+                            if (!errorJson.isNullOrEmpty()) {
+                                Gson().fromJson(errorJson, BaseResponse::class.java)?.message
+                            } else null
+                        } catch (e: Exception) {
+                            null
+                        }
+
+                        Toast.makeText(this, errorMsg ?: "Server error", Toast.LENGTH_LONG).show()
                     }
                 }
 
                 Status.ERROR -> {
                     AppUtil.stopLoader()
-                    Toast.makeText(this, apiResponse.message ?: "Network Error", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, state.message ?: "Network error", Toast.LENGTH_LONG).show()
                 }
             }
         }

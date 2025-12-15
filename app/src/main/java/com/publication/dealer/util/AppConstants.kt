@@ -7,7 +7,9 @@ import com.publication.dealer.login.model.LoginResponseModel
 object AppConstants {
 
 
-    var URL = "https://pubdealersapi.cyberasol.com/"
+    var URL = "https://pubdealersapi.unique.edu.pk/"
+
+
 
 
 

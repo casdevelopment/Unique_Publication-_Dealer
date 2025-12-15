@@ -137,7 +137,9 @@ class CreateUserActivity : AppCompatActivity() {
     }
 
 
-   private fun callSignUpApi() {
+
+    private fun callSignUpApi() {
+
         val signUpRequest = SignUpRequestModel(
             userId = binding.etUserId.text.toString().trim(),
             userName = binding.etUserName.text.toString().trim(),
@@ -145,60 +147,64 @@ class CreateUserActivity : AppCompatActivity() {
             mobileNumber = binding.etMobileNumber.text.toString().trim(),
             userType = "User",
             addedBy = AppConstants.userData?.userId ?: "",
-            password = binding.etPassword.text.toString().trim(),
-            )
+            password = binding.etPassword.text.toString().trim()
+        )
 
+        viewModel.signUp(signUpRequest).observe(this) { state ->
 
-        viewModel.signUp(signUpRequest).observe(this) { apiResponse ->
-            when (apiResponse.status) {
-                Status.LOADING -> AppUtil.startLoader(this)
+            when (state.status) {
+
+                Status.LOADING -> {
+                    AppUtil.startLoader(this)
+                }
 
                 Status.SUCCESS -> {
                     AppUtil.stopLoader()
 
-                    val retrofitResponse = apiResponse.data // Response<BaseResponse<SignUpResponseModel>>
+                    val response = state.data ?: run {
+                        Toast.makeText(this, "Empty response", Toast.LENGTH_LONG).show()
+                        return@observe
+                    }
 
-                    if (retrofitResponse != null) {
+                    // ✅ HTTP 2xx
+                    if (response.isSuccessful && response.body() != null) {
 
-                        // Parse either body() or errorBody() correctly
-                        val baseResponse: BaseResponse<Boolean> = if (retrofitResponse.isSuccessful && retrofitResponse.body() != null) {
-                            retrofitResponse.body()!!
-                        } else {
-                            val errorJson = retrofitResponse.errorBody()?.string() ?: "{}"
-                            try {
-                                Gson().fromJson(errorJson, BaseResponse::class.java) as BaseResponse<Boolean>
-                            } catch (e: Exception) {
-                                BaseResponse(
-                                    code = retrofitResponse.code(),
-                                    message = "Something went wrong",
-                                    success = false,
-                                    data = null
-                                )
-                            }
-                        }
+                        val body = response.body()!!
+                        Toast.makeText(this, body.message, Toast.LENGTH_LONG).show()
 
-                        // ALWAYS show API message
-                        Toast.makeText(this, baseResponse.message, Toast.LENGTH_LONG).show()
-
-                        // If success, dismiss dialog
-                        if (baseResponse.success == true) {
-                            startActivity(Intent(this@CreateUserActivity, AdminDashBoardActivity::class.java))
+                        if (body.success) {
+                            startActivity(Intent(this, AdminDashBoardActivity::class.java)
+                            )
                             finish()
                         }
+
+                    }
+                    // ❗ HTTP error but API sent message (409, 400, etc)
+                    else {
+                        val errorMsg = try {
+                            val errorJson = response.errorBody()?.string()
+                            if (!errorJson.isNullOrEmpty()) {
+                                Gson().fromJson(errorJson, BaseResponse::class.java)?.message
+                            } else null
+                        } catch (e: Exception) {
+                            null
+                        }
+
+                        Toast.makeText(this, errorMsg ?: "Server error", Toast.LENGTH_LONG).show()
                     }
                 }
 
                 Status.ERROR -> {
                     AppUtil.stopLoader()
-                    Toast.makeText(this, apiResponse.message ?: "Network Error", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, state.message ?: "Network error", Toast.LENGTH_LONG).show()
                 }
             }
         }
-
-
     }
 
-    }
+
+
+}
 
 
 
