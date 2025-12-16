@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="2dp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Item Name -->
+            <TextView
+                android:id="@+id/tvItemName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="GYMNASTIC AND AEROBICS CERTIFICATE"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimaryVariant"
+                android:layout_marginBottom="6dp"
+                android:maxLines="2"
+                android:ellipsize="end"/>
+
+            <!-- Sale Info -->
+            <TextView
+                android:id="@+id/tvSno"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="S.No: 4644539 "
+                android:textSize="12sp"
+                android:textColor="@color/primary_color"
+                android:layout_marginBottom="2dp"/>
+
+            <TextView
+                android:id="@+id/tvSaleDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="15 Dec 2025"
+                android:textSize="12sp"
+                android:textColor="@color/primary_color"
+                android:layout_marginBottom="4dp"/>
+
+            <!-- Item Code -->
+            <TextView
+                android:id="@+id/tvItemCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Item Code: 900003105"
+                android:textSize="12sp"
+                android:textColor="@color/primary_color"
+                android:layout_marginBottom="12dp"/>
+
+            <!-- Top Row: Printed Price & Discount -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp"
+                android:weightSum="2">
+
+                <!-- Printed Price Box -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/border_box"
+                    android:padding="8dp"
+                    android:layout_marginEnd="4dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Printed"
+                        android:textSize="12sp"
+                        android:textColor="@color/primary_color"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/tvPrintedPrice"
+                        tools:text="0.00"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:textStyle="bold"
+                        android:gravity="center"/>
+                </LinearLayout>
+
+                <!-- Discount Box -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/border_box"
+                    android:padding="8dp"
+                    android:layout_marginStart="4dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Discount"
+                        android:textSize="12sp"
+                        android:textColor="@color/primary_color"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/tvDiscount"
+                        tools:text="-13.00"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:textColor="#D32F2F"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Bottom Row with Border: Qty | Rate | Amount -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:background="@drawable/border_box"
+                android:padding="8dp">
+
+                <!-- Qty -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Qty"
+                        android:textSize="12sp"
+                        android:textColor="@color/primary_color"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/tvQty"
+                        tools:text="1700"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:textStyle="bold"
+                        android:gravity="center"/>
+                </LinearLayout>
+
+                <!-- Rate -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="4dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Rate"
+                        android:textSize="12sp"
+                        android:textColor="@color/primary_color"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/tvRate"
+                        tools:text="13.00"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:textStyle="bold"
+                        android:gravity="center"/>
+                </LinearLayout>
+
+                <!-- Amount -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Amount"
+                        android:textSize="12sp"
+                        android:textColor="@color/primary_color"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/tvAmount"
+                        tools:text="22,100.00"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryVariant"
+                        android:gravity="center"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

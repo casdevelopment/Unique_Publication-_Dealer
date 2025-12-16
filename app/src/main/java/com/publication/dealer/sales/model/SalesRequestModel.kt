@@ -1,4 +1,7 @@
 package com.publication.dealer.sales.model
 
-class SalesRequestModel {
-}
+data class SalesRequestModel (
+    val partyCode : Int,
+    val fromDate : String,
+    val toDate : String
+)

@@ -14,6 +14,8 @@ import com.publication.dealer.network.retofit.provideOkHttpClient
 import com.publication.dealer.network.retofit.provideRetrofit
 import com.publication.dealer.network.retofit.provideRetrofitInterface
 import com.publication.dealer.reset_password.view_model.ResetPasswordViewModel
+import com.publication.dealer.sales.viewmodel.SalesDetailsViewModel
+import com.publication.dealer.sales.viewmodel.SalesViewModel
 import com.publication.dealer.update_user_password.viewmodel.UpdateUserPasswordViewModel
 import com.publication.dealer.update_user_profile.viewmodel.UpdateUserViewModel
 import com.publication.dealer.util.AppConstants.SHARED_PREF_NAME
@@ -35,6 +37,9 @@ val viewModelModule= module{
     viewModel { UpdateUserViewModel(get()) }
     viewModel { UploadImageViewModel(get()) }
     viewModel { UpdateUserPasswordViewModel(get()) }
+    viewModel { SalesViewModel(get()) }
+    viewModel { SalesDetailsViewModel(get()) }
+
     }
 
 val networkModule = module {
