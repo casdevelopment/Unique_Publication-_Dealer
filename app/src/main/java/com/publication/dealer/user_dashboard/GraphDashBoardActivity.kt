@@ -29,10 +29,12 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.gson.Gson
 import com.publication.dealer.R
 import com.publication.dealer.SessionManager
+import com.publication.dealer.create_user.CreateUserActivity
 import com.publication.dealer.databinding.ActivityGraphDashBoardBinding
 import com.publication.dealer.image_upload.viewmodel.UploadImageViewModel
 import com.publication.dealer.login.model.LoginResponseModel
 import com.publication.dealer.network.Status
+import com.publication.dealer.sales.SalesActivity
 import com.publication.dealer.splash.SplashActivity
 import com.publication.dealer.update_user_password.UpdateUserPasswordActivity
 import com.publication.dealer.update_user_profile.UpdateUserProfileActivity
@@ -102,19 +104,14 @@ class GraphDashBoardActivity : AppCompatActivity() {
             showImagePickerDialog()
         }
 
-
+        setupClickListeners()
         setUserData()
         setupBarChart()
         val dashBoardResponseData = DashBoardRequestModel(getFirstDateOfCurrentYear(), getCurrentDate())
         callApi(dashBoardResponseData)
         setupPopupMenu()
-        binding.option.setOnClickListener {
-            Log.v("option","option click")
-            popupMenu.show()
-        }
-        binding.viewReport.setOnClickListener {
-            startActivity(Intent(this@GraphDashBoardActivity, MainDashBoardActivity::class.java))
-        }
+
+
     }
     private fun setUserData() {
         with(binding) {
@@ -134,6 +131,28 @@ class GraphDashBoardActivity : AppCompatActivity() {
                     .centerCrop()
                     .into(profileImage)
             }
+        }
+    }
+
+    private fun setupClickListeners() {
+
+        with(binding){
+
+
+            viewReport.setOnClickListener {
+                startActivity(Intent(this@GraphDashBoardActivity, MainDashBoardActivity::class.java))
+            }
+
+            option.setOnClickListener {
+                Log.v("option","option click")
+                popupMenu.show()
+            }
+
+            viewSales.setOnClickListener {
+                startActivity(Intent(this@GraphDashBoardActivity, SalesActivity::class.java))
+            }
+
+
         }
     }
 
