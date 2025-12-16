@@ -184,7 +184,7 @@
 
 
     <com.github.mikephil.charting.charts.BarChart
-        android:layout_above="@id/viewReport"
+        android:layout_above="@id/buttonView"
         android:layout_below="@id/summaryLayout"
         android:id="@+id/barChart"
         android:layout_width="match_parent"
@@ -192,21 +192,45 @@
         android:layout_height="wrap_content" />
 
 
-
-
-
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/viewReport"
+    <LinearLayout
+        android:id="@+id/buttonView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="View Report"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:background="@drawable/button_primary"
+        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_margin="20dp"
-        />
+        android:layout_margin="20dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/viewReport"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="View Report"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:background="@drawable/button_primary" />
+
+
+
+        <View
+            android:layout_width="16dp"
+            android:layout_height="match_parent"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/viewSales"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="View Sales"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:background="@drawable/button_primary" />
+
+    </LinearLayout>
+
+
+
+
 
 
 </RelativeLayout>
