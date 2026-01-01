@@ -1,5 +1,6 @@
 package com.publication.dealer.network.api
 
+import com.publication.dealer.PDF_Upload.model.PDFUploadRequest
 import com.publication.dealer.create_user.model.SignUpRequestModel
 import com.publication.dealer.inactivate_user.model.InactivateUserRequest
 import com.publication.dealer.user_dashboard.model.DashBoardRequestModel
@@ -66,5 +67,9 @@ interface ApiInterface {
     suspend fun salesDetails(
         @Path("sno") sno: Long
     ): Response<BaseResponse<List<SalesDetailResponseModel>>>
+
+    @POST("Dealer/uploadpdf")
+    suspend fun uploadPdf(@Body request: PDFUploadRequest): Response<BaseResponse<Boolean>>
+
 
 }

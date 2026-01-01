@@ -49,6 +49,13 @@ class SalesActivity : AppCompatActivity() {
         binding = ActivitySalesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val today = Calendar.getInstance()
+        selectedDateTo = today.time  // Today
+
+        val pastDate = Calendar.getInstance()
+        pastDate.add(Calendar.DAY_OF_MONTH, -90) // 90 days back
+        selectedDateFrom = pastDate.time
+
         updateDateDisplays()
         setupClickListeners()
 
@@ -228,12 +235,12 @@ class SalesActivity : AppCompatActivity() {
 
     private fun navigateToGraphDashboard() {
 
-        startActivity(Intent(this@SalesActivity, GraphDashBoardActivity::class.java))
+       // startActivity(Intent(this@SalesActivity, GraphDashBoardActivity::class.java))
         finish()
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
-        navigateToGraphDashboard()
+        finish()
     }
 }

@@ -70,4 +70,9 @@ class SalesDetailsActivity : AppCompatActivity() {
     private fun navigateToSalesActivity() {
         finish()
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
 }

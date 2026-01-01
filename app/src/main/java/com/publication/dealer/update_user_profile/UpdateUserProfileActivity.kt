@@ -39,7 +39,6 @@ class UpdateUserProfileActivity : AppCompatActivity() {
         with(binding) {
             backBtn.setOnClickListener { navigateToGraphDashboard() }
             updateBtn.setOnClickListener {
-                //if (validateInputs())
                     callUpdateUserApi()
             }
         }

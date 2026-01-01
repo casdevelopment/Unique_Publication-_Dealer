@@ -1,5 +1,6 @@
 package com.publication.dealer.network.repo
 
+import com.publication.dealer.PDF_Upload.model.PDFUploadRequest
 import com.publication.dealer.create_user.model.SignUpRequestModel
 import com.publication.dealer.inactivate_user.model.InactivateUserRequest
 import com.publication.dealer.user_dashboard.model.DashBoardRequestModel
@@ -73,6 +74,10 @@ class Repository(private val api: ApiInterface) {
 
     suspend fun salesDetails(sno: Long): Response<BaseResponse<List<SalesDetailResponseModel>>> {
         return api.salesDetails(sno)
+    }
+
+    suspend fun uploadPdf(request: PDFUploadRequest): Response<BaseResponse<Boolean>> {
+        return api.uploadPdf(request)
     }
 
 

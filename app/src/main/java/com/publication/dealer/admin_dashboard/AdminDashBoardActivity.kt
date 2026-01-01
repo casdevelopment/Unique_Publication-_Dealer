@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -18,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.appcompat.widget.PopupMenu
 import com.google.gson.Gson
+import com.publication.dealer.PDF_Upload.model.PDFUploadRequest
+import com.publication.dealer.PDF_Upload.viewmodel.UploadPdfViewModel
 import com.publication.dealer.R
 import com.publication.dealer.SessionManager
 import com.publication.dealer.create_user.CreateUserActivity
@@ -48,6 +51,13 @@ class AdminDashBoardActivity : AppCompatActivity() {
     private val sessionManager: SessionManager by inject()
 
     private lateinit var popupMenu: PopupMenu
+
+    private val viewModelUpload: UploadPdfViewModel by viewModel()
+
+    private val PDF_PICK_CODE = 1001
+    private var selectedPdfUri: Uri? = null
+    private var selectedPdfName: String? = null
+    private var pdfSelectedCallback: ((Uri, String) -> Unit)? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,6 +93,11 @@ class AdminDashBoardActivity : AppCompatActivity() {
             btnInactivateUser.setOnClickListener {
 
                 openInactivateUserDialog()
+            }
+
+            btnOurProduct.setOnClickListener {
+
+                showUploadPdfDialog()
             }
 
         }
@@ -140,10 +155,6 @@ class AdminDashBoardActivity : AppCompatActivity() {
 
     private fun callResetApi(userIdToReset: String, dialog: Dialog) {
 
-//        AppConstants.userData = Gson().fromJson(
-//            sessionManager.getUserInfo(),
-//            LoginResponseModel::class.java
-//        )
 
         val adminId = AppConstants.userData?.userId ?: "Admin"
 
@@ -156,54 +167,6 @@ class AdminDashBoardActivity : AppCompatActivity() {
             adminUserID = adminId,
             resetUserID = userIdToReset
         )
-
-
-
-//        viewModel.resetPassword(request).observe(this) { apiResponse ->
-//            when (apiResponse.status) {
-//                Status.LOADING -> AppUtil.startLoader(this)
-//
-//                Status.SUCCESS -> {
-//                    AppUtil.stopLoader()
-//
-//                    val retrofitResponse = apiResponse.data // Response<BaseResponse<SignUpResponseModel>>
-//
-//                    if (retrofitResponse != null) {
-//
-//                        // Parse either body() or errorBody() correctly
-//                        val baseResponse: BaseResponse<Boolean> = if (retrofitResponse.isSuccessful && retrofitResponse.body() != null) {
-//                            retrofitResponse.body()!!
-//                        } else {
-//                            val errorJson = retrofitResponse.errorBody()?.string() ?: "{}"
-//                            try {
-//                                Gson().fromJson(errorJson, BaseResponse::class.java) as BaseResponse<Boolean>
-//                            } catch (e: Exception) {
-//                                BaseResponse(
-//                                    code = retrofitResponse.code(),
-//                                    message = "Something went wrong",
-//                                    success = false,
-//                                    data = null
-//                                )
-//                            }
-//                        }
-//
-//                        // ALWAYS show API message
-//                        Toast.makeText(this, baseResponse.message, Toast.LENGTH_LONG).show()
-//
-//                        // If success, dismiss dialog
-//                        if (baseResponse.success == true) {
-//                            dialog.dismiss()
-//                        }
-//                    }
-//                }
-//
-//                Status.ERROR -> {
-//                    AppUtil.stopLoader()
-//                    Toast.makeText(this, apiResponse.message ?: "Network Error", Toast.LENGTH_LONG).show()
-//                }
-//            }
-//        }
-
 
         viewModel.resetPassword(request).observe(this) { state ->
 
@@ -299,10 +262,6 @@ class AdminDashBoardActivity : AppCompatActivity() {
 
     private fun callInactivateApi(userIdToReset: String, dialog: Dialog) {
 
-//        AppConstants.userData = Gson().fromJson(
-//            sessionManager.getUserInfo(),
-//            LoginResponseModel::class.java
-//        )
 
         val adminId = AppConstants.userData?.userId ?: "Admin"
 
@@ -318,50 +277,6 @@ class AdminDashBoardActivity : AppCompatActivity() {
 
 
 
-//        viewModelInactivate.inactivateUser(request).observe(this) { apiResponse ->
-//            when (apiResponse.status) {
-//                Status.LOADING -> AppUtil.startLoader(this)
-//
-//                Status.SUCCESS -> {
-//                    AppUtil.stopLoader()
-//
-//                    val retrofitResponse = apiResponse.data // Response<BaseResponse<SignUpResponseModel>>
-//
-//                    if (retrofitResponse != null) {
-//
-//                        // Parse either body() or errorBody() correctly
-//                        val baseResponse: BaseResponse<Boolean> = if (retrofitResponse.isSuccessful && retrofitResponse.body() != null) {
-//                            retrofitResponse.body()!!
-//                        } else {
-//                            val errorJson = retrofitResponse.errorBody()?.string() ?: "{}"
-//                            try {
-//                                Gson().fromJson(errorJson, BaseResponse::class.java) as BaseResponse<Boolean>
-//                            } catch (e: Exception) {
-//                                BaseResponse(
-//                                    code = retrofitResponse.code(),
-//                                    message = "Something went wrong",
-//                                    success = false,
-//                                    data = null
-//                                )
-//                            }
-//                        }
-//
-//                        // ALWAYS show API message
-//                        Toast.makeText(this, baseResponse.message, Toast.LENGTH_LONG).show()
-//
-//                        // If success, dismiss dialog
-//                        if (baseResponse.success == true) {
-//                            dialog.dismiss()
-//                        }
-//                    }
-//                }
-//
-//                Status.ERROR -> {
-//                    AppUtil.stopLoader()
-//                    Toast.makeText(this, apiResponse.message ?: "Network Error", Toast.LENGTH_LONG).show()
-//                }
-//            }
-//        }
 
         viewModelInactivate.inactivateUser(request).observe(this) { state ->
 
@@ -415,8 +330,6 @@ class AdminDashBoardActivity : AppCompatActivity() {
         }
     }
 
-
-
     private fun setupPopupMenu() {
         // Create ContextThemeWrapper for styling (optional)
         val wrapper = ContextThemeWrapper(this, R.style.PopupMenu)
@@ -449,5 +362,122 @@ class AdminDashBoardActivity : AppCompatActivity() {
             .setNegativeButton("No", null)
             .show()
     }
+
+    private fun showUploadPdfDialog() {
+        val dialog = Dialog(this@AdminDashBoardActivity)
+        dialog.setContentView(R.layout.dialog_upload_pdf)
+        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val btnSelect = dialog.findViewById<Button>(R.id.btnSelectPdf)
+        val btnUpload = dialog.findViewById<Button>(R.id.btnUploadPdf)
+        val etSelectedPdf = dialog.findViewById<EditText>(R.id.etSelectedPdf)
+
+        // Select PDF
+        btnSelect.setOnClickListener {
+            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.type = "application/pdf"
+            startActivityForResult(intent, PDF_PICK_CODE)
+        }
+
+        // Upload PDF
+        btnUpload.setOnClickListener {
+            if (selectedPdfUri != null) {
+                uploadPdf(selectedPdfUri!!, dialog)
+            } else {
+                Toast.makeText(this, "Please select a PDF first", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // Update file name in EditText after selection
+        pdfSelectedCallback = { uri, name ->
+            selectedPdfUri = uri
+            selectedPdfName = name
+            etSelectedPdf.setText(name)
+        }
+
+        dialog.show()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PDF_PICK_CODE && resultCode == RESULT_OK) {
+            data?.data?.let { uri ->
+                val fileName = getFileName(uri)
+                pdfSelectedCallback?.invoke(uri, fileName)
+            }
+        }
+    }
+
+    // Helper to get PDF file name
+    private fun getFileName(uri: Uri): String {
+        var result: String? = null
+        if (uri.scheme == "content") {
+            val cursor = contentResolver.query(uri, null, null, null, null)
+            cursor?.use {
+                if (it.moveToFirst()) {
+                    result = it.getString(it.getColumnIndexOrThrow("_display_name"))
+                }
+            }
+        }
+        if (result == null) {
+            result = uri.path
+            val cut = result?.lastIndexOf('/') ?: -1
+            if (cut != -1) result = result?.substring(cut + 1)
+        }
+        return result ?: "file.pdf"
+    }
+
+    // Convert PDF to Base64 and call ViewModel
+    private fun uploadPdf(uri: Uri, dialog: Dialog) {
+        val adminId = AppConstants.userData?.userId ?: "Admin"
+        if (adminId.isEmpty()) {
+            Toast.makeText(this, "Admin ID not found!", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val inputStream = contentResolver.openInputStream(uri)
+        val bytes = inputStream?.readBytes()
+        if (bytes == null) {
+            Toast.makeText(this, "Failed to read PDF file", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val fileBase64 = android.util.Base64.encodeToString(bytes, android.util.Base64.DEFAULT)
+        val fileName = selectedPdfName ?: "uploaded_file.pdf"
+
+        val request = PDFUploadRequest(
+            adminUserID = adminId,
+            fileName = fileName,
+            fileBase64 = fileBase64
+        )
+
+        viewModelUpload.uploadPdf(request).observe(this) { state ->
+            when (state.status) {
+                Status.LOADING -> AppUtil.startLoader(this)
+                Status.SUCCESS -> {
+                    AppUtil.stopLoader()
+                    val response = state.data ?: run {
+                        Toast.makeText(this, "Empty response", Toast.LENGTH_LONG).show()
+                        return@observe
+                    }
+                    if (response.isSuccessful && response.body() != null) {
+                        val body = response.body()!!
+                        Toast.makeText(this, body.message, Toast.LENGTH_LONG).show()
+                        if (body.success) dialog.dismiss()
+                    } else {
+                        Toast.makeText(this, "Upload failed", Toast.LENGTH_LONG).show()
+                    }
+                }
+                Status.ERROR -> {
+                    AppUtil.stopLoader()
+                    Toast.makeText(this, state.message ?: "Network error", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+    }
+
+
+
 
 }

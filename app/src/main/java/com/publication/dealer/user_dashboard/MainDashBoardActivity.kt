@@ -261,12 +261,12 @@ class MainDashBoardActivity : AppCompatActivity() {
 
     private fun navigateToGraphDashboard() {
 
-        startActivity(Intent(this@MainDashBoardActivity, GraphDashBoardActivity::class.java))
+       // startActivity(Intent(this@MainDashBoardActivity, GraphDashBoardActivity::class.java))
         finish()
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
-        navigateToGraphDashboard()
+        finish()
     }
 }

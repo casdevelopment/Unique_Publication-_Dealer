@@ -3,6 +3,7 @@ package com.publication.dealer.modules
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
+import com.publication.dealer.PDF_Upload.viewmodel.UploadPdfViewModel
 import com.publication.dealer.SessionManager
 import com.publication.dealer.create_user.viewmodel.SignUpViewModel
 import com.publication.dealer.image_upload.viewmodel.UploadImageViewModel
@@ -39,6 +40,7 @@ val viewModelModule= module{
     viewModel { UpdateUserPasswordViewModel(get()) }
     viewModel { SalesViewModel(get()) }
     viewModel { SalesDetailsViewModel(get()) }
+    viewModel { UploadPdfViewModel(get()) }
 
     }
 
