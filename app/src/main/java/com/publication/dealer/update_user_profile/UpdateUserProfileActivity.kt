@@ -48,8 +48,8 @@ class UpdateUserProfileActivity : AppCompatActivity() {
         with(binding) {
             etUserId.setText(cleanValue(AppConstants.userData?.userId))
             etMobileNumber1.setText(cleanValue(AppConstants.userData?.mobileNumber))
-            etMobileNumber2.setText(cleanValue(AppConstants.userData?.mobileNumber2))
-            etMobileNumber3.setText(cleanValue(AppConstants.userData?.mobileNumber3))
+            etMobileNumber2.setText(cleanValue(AppConstants.userData?.purchaseNumber1))
+            etMobileNumber3.setText(cleanValue(AppConstants.userData?.purchaseNumber2))
             etTown.setText(cleanValue(AppConstants.userData?.town))
             etCity.setText(cleanValue(AppConstants.userData?.city))
             etDistrict.setText(cleanValue(AppConstants.userData?.district))
@@ -72,8 +72,8 @@ class UpdateUserProfileActivity : AppCompatActivity() {
         val updateUserRequest = UpdateUserModel(
             userId = binding.etUserId.text.toString().trim(),
             mobileNumber = binding.etMobileNumber1.text.toString().trim(),
-            mobileNumber2 = binding.etMobileNumber2.text.toString().trim(),
-            mobileNumber3 = binding.etMobileNumber3.text.toString().trim(),
+            purchaseNumber1 = binding.etMobileNumber2.text.toString().trim(),
+            purchaseNumber2 = binding.etMobileNumber3.text.toString().trim(),
             remarks = "Self Update",
             town = binding.etTown.text.toString().trim(),
             city = binding.etCity.text.toString().trim(),
@@ -100,8 +100,8 @@ class UpdateUserProfileActivity : AppCompatActivity() {
 
                             AppConstants.userData?.apply {
                                 mobileNumber = updateUserRequest.mobileNumber
-                                mobileNumber2 = updateUserRequest.mobileNumber2
-                                mobileNumber3 = updateUserRequest.mobileNumber3
+                                purchaseNumber1 = updateUserRequest.purchaseNumber1
+                                purchaseNumber2 = updateUserRequest.purchaseNumber2
                                 remarks = updateUserRequest.remarks
                                 town = updateUserRequest.town
                                 city = updateUserRequest.city

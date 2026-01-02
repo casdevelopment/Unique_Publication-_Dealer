@@ -120,6 +120,7 @@ class GraphDashBoardActivity : AppCompatActivity() {
         binding = ActivityGraphDashBoardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         AppConstants.userData =
             Gson().fromJson(sessionManager.getUserInfo(), LoginResponseModel::class.java)
 

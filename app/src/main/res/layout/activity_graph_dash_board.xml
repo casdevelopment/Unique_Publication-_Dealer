@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/background_light"
     android:padding="16dp"
+    android:fitsSystemWindows="true"
     >
 
     <FrameLayout
@@ -47,13 +48,15 @@
     <LinearLayout
         android:id="@+id/topLayout"
         android:layout_below="@id/profileBanner"
-        android:layout_marginTop="-50dp"
+        android:layout_marginTop="-30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/rounded_card_bg"
         android:elevation="6dp"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
         <!-- User Name -->
         <TextView
@@ -141,7 +144,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="16dp">
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/viewSales"

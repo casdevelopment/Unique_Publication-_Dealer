@@ -37,7 +37,7 @@ class SalesAdapter(
             binding.tvTotalAmount.text = sales.totalAmount.toString()
 
 
-            binding.root.setOnClickListener {
+            binding.viewDetails.setOnClickListener {
                 onItemClick(sales)
             }
         }

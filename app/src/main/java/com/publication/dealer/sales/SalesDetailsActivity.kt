@@ -2,9 +2,6 @@ package com.publication.dealer.sales
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,10 +9,7 @@ import com.publication.dealer.SessionManager
 import com.publication.dealer.databinding.ActivitySalesDetailsBinding
 import com.publication.dealer.network.Status
 import com.publication.dealer.sales.Adapters.SalesDetailsAdapter
-import com.publication.dealer.sales.model.SalesRequestModel
 import com.publication.dealer.sales.viewmodel.SalesDetailsViewModel
-import com.publication.dealer.sales.viewmodel.SalesViewModel
-import com.publication.dealer.user_dashboard.GraphDashBoardActivity
 import com.publication.dealer.util.AppUtil
 import com.publication.dealer.util.showToast
 import org.koin.android.ext.android.inject

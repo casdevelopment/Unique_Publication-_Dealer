@@ -4,8 +4,8 @@ data class UpdateUserModel (
 
     val userId : String,
     val mobileNumber: String,
-    val mobileNumber2: String?,
-    val mobileNumber3: String?,
+    val purchaseNumber1: String?,
+    val purchaseNumber2: String?,
     val remarks: String,
     val town: String,
     val city: String,

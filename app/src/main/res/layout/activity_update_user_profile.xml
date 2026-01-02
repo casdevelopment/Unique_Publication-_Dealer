@@ -113,7 +113,7 @@
                     android:id="@+id/etMobileNumber2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Second Mobile Number"
+                    android:hint="Purchase Number 1"
                     android:inputType="text"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -130,7 +130,7 @@
                     android:id="@+id/etMobileNumber3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Third Mobile Number"
+                    android:hint="Purchase Number 2"
                     android:inputType="text"/>
             </com.google.android.material.textfield.TextInputLayout>
 
