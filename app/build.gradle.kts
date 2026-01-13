@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("kotlin-parcelize")
 }
 
 android {
@@ -79,5 +80,8 @@ dependencies {
 
     implementation ("com.github.bumptech.glide:glide:4.16.0")
 
+//
+//    implementation ("com.tom-roush:pdfbox-android:2.0.27.0")
+//    implementation ("org.apache.commons:commons-io:1.3.2")
 
 }

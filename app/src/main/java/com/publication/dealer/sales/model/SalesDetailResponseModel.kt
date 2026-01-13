@@ -1,5 +1,7 @@
 package com.publication.dealer.sales.model
 
+import java.io.Serializable
+
 data class SalesDetailResponseModel(
     val sno: Long,
     val saleDate: String,
@@ -10,6 +12,5 @@ data class SalesDetailResponseModel(
     val printedPrice: Double,
     val discount: Double,
     val amount: Double
-)
-
+) : Serializable
 

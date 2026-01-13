@@ -5,22 +5,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/mainLayout"
-    android:paddingBottom="30dp"
-    android:paddingTop="10dp"
+    android:fitsSystemWindows="true"
+    android:padding="10dp"
     android:background="@color/background_light">
 
 
 
     <LinearLayout
-        android:layout_margin="10dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp">
 
-        <LinearLayout
-            android:gravity="center|start"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+
 
             <ImageView
                 android:id="@+id/backBtn"
@@ -38,7 +35,7 @@
                 android:layout_marginLeft="20dp"/>
 
 
-        </LinearLayout>
+
 
 
 
@@ -53,11 +50,11 @@
         android:gravity="center"
         android:layout_margin="10dp"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-
         android:weightSum="3"
-        android:elevation="2dp">
+        android:elevation="2dp"
+        >
 
         <!-- In your activity_main_dashboard.xml -->
         <TextView

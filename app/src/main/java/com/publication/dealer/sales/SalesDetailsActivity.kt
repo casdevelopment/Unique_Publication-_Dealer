@@ -5,10 +5,13 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.publication.dealer.PDF_Upload.PdfGenerator
+import com.publication.dealer.PDF_Upload.SalesPdfPreviewActivity
 import com.publication.dealer.SessionManager
 import com.publication.dealer.databinding.ActivitySalesDetailsBinding
 import com.publication.dealer.network.Status
 import com.publication.dealer.sales.Adapters.SalesDetailsAdapter
+import com.publication.dealer.sales.model.SalesDetailResponseModel
 import com.publication.dealer.sales.viewmodel.SalesDetailsViewModel
 import com.publication.dealer.util.AppUtil
 import com.publication.dealer.util.showToast
@@ -20,6 +23,8 @@ class SalesDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySalesDetailsBinding
     private val viewModel: SalesDetailsViewModel by viewModel()
     private val sessionManager: SessionManager by inject()
+    private var salesList: List<SalesDetailResponseModel> = emptyList()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +40,16 @@ class SalesDetailsActivity : AppCompatActivity() {
         binding.backBtn.setOnClickListener {
             navigateToSalesActivity()
         }
+
+        binding.btnPdf.setOnClickListener {
+            if (salesList.isNotEmpty()) {
+                PdfGenerator.createSalesPdf(this,  ArrayList(salesList))
+
+            } else {
+                showToast("No data to export")
+            }
+        }
+
     }
 
     private fun callApi(sno: Long) {
@@ -45,12 +60,15 @@ class SalesDetailsActivity : AppCompatActivity() {
                     AppUtil.stopLoader()
                     val dataList = apiResponse.data?.body()?.data
                     if (!dataList.isNullOrEmpty()) {
+                        salesList = dataList
                         val adapter = SalesDetailsAdapter(dataList)
                         binding.recyclerView.layoutManager = LinearLayoutManager(this)
                         binding.recyclerView.adapter = adapter
                     } else {
                         showToast("No sales details found")
                     }
+
+
                 }
                 Status.ERROR -> {
                     AppUtil.stopLoader()

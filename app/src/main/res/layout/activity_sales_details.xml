@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-android:id="@+id/mainLayout"
-    android:paddingBottom="30dp"
-    android:paddingTop="10dp"
-android:background="@color/background_light">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/mainLayout"
+    android:fitsSystemWindows="true"
+    android:padding="10dp"
+    android:background="@color/background_light">
 
 
 
 <LinearLayout
-    android:layout_margin="10dp"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="20dp"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="80dp">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:gravity="center|start"
@@ -29,13 +30,24 @@ android:background="@color/background_light">
             android:layout_height="32dp"/>
         <TextView
             android:id="@+id/title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="Sales Details"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/primary_color"
             android:layout_marginLeft="20dp"/>
+
+
+        <ImageView
+            android:id="@+id/btnPdf"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/pdfpng"
+            app:tint="@color/primary_color" />
+
+
 
 
     </LinearLayout>
