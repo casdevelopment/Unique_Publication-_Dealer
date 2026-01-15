@@ -159,7 +159,7 @@
             android:layout_marginTop="8dp"/>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnInactivateUser"
+            android:id="@+id/btnOurProduct"
             android:text="Our Products"
             android:textColor="@color/white"
             android:textStyle="bold"
@@ -169,6 +169,7 @@
             android:layout_marginTop="12dp"/>
 
         <androidx.appcompat.widget.AppCompatButton
+            android:visibility="gone"
             android:id="@+id/btnResetPassword"
             android:text="Incentive"
             android:textColor="@color/white"

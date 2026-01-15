@@ -176,6 +176,9 @@ class GraphDashBoardActivity : AppCompatActivity() {
             viewSales.setOnClickListener {
                 startActivity(Intent(this@GraphDashBoardActivity, SalesActivity::class.java))
             }
+            btnOurProduct.setOnClickListener {
+                showToast("Coming Soon")
+            }
 
 
         }

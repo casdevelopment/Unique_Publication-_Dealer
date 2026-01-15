@@ -18,6 +18,17 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+
+        create("publication") {
+            keyAlias = "publication_dealer"
+            keyPassword = "publication_dealer123"
+            storePassword = "publication_dealer123"
+             storeFile = file("E:\\Unique_Publication-_Dealer\\publication_dealer.jks")
+
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
