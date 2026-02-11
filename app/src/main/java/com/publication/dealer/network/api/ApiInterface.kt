@@ -68,8 +68,15 @@ interface ApiInterface {
         @Path("sno") sno: Long
     ): Response<BaseResponse<List<SalesDetailResponseModel>>>
 
-    @POST("Dealer/uploadpdf")
-    suspend fun uploadPdf(@Body request: PDFUploadRequest): Response<BaseResponse<Boolean>>
+//    @POST("Dealer/upload-shop-pdf")
+//    suspend fun uploadPdf(@Body request: PDFUploadRequest): Response<BaseResponse<Boolean>>
+
+    @Multipart
+    @POST("Dealer/upload-shop-pdf")
+    suspend fun uploadShopPdf(
+        @Part file: MultipartBody.Part
+    ): Response<BaseResponse<Any>>
+
 
 
 }

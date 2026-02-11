@@ -76,9 +76,16 @@ class Repository(private val api: ApiInterface) {
         return api.salesDetails(sno)
     }
 
-    suspend fun uploadPdf(request: PDFUploadRequest): Response<BaseResponse<Boolean>> {
-        return api.uploadPdf(request)
+//    suspend fun uploadPdf(request: PDFUploadRequest): Response<BaseResponse<Boolean>> {
+//        return api.uploadPdf(request)
+//    }
+
+    suspend fun uploadShopPdf(
+        file: MultipartBody.Part
+    ): Response<BaseResponse<Any>> {
+        return api.uploadShopPdf(file)
     }
+
 
 
 

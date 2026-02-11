@@ -37,8 +37,12 @@ import com.publication.dealer.reset_password.view_model.ResetPasswordViewModel
 import com.publication.dealer.splash.SplashActivity
 import com.publication.dealer.util.AppConstants
 import com.publication.dealer.util.AppUtil
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.io.File
 
 class AdminDashBoardActivity : AppCompatActivity() {
 
@@ -430,52 +434,76 @@ class AdminDashBoardActivity : AppCompatActivity() {
 
     // Convert PDF to Base64 and call ViewModel
     private fun uploadPdf(uri: Uri, dialog: Dialog) {
+
         val adminId = AppConstants.userData?.userId ?: "Admin"
+
         if (adminId.isEmpty()) {
             Toast.makeText(this, "Admin ID not found!", Toast.LENGTH_SHORT).show()
             return
         }
 
-        val inputStream = contentResolver.openInputStream(uri)
-        val bytes = inputStream?.readBytes()
-        if (bytes == null) {
-            Toast.makeText(this, "Failed to read PDF file", Toast.LENGTH_SHORT).show()
-            return
-        }
+        try {
+            val inputStream = contentResolver.openInputStream(uri)
+            val file = File(cacheDir, getFileName(uri))
 
-        val fileBase64 = android.util.Base64.encodeToString(bytes, android.util.Base64.DEFAULT)
-        val fileName = selectedPdfName ?: "uploaded_file.pdf"
+            file.outputStream().use { outputStream ->
+                inputStream?.copyTo(outputStream)
+            }
 
-        val request = PDFUploadRequest(
-            adminUserID = adminId,
-            fileName = fileName,
-            fileBase64 = fileBase64
-        )
+            val requestFile = file.asRequestBody("application/pdf".toMediaTypeOrNull())
+            val body = MultipartBody.Part.createFormData(
+                "file",  // 🔥 must match API parameter name
+                file.name,
+                requestFile
+            )
 
-        viewModelUpload.uploadPdf(request).observe(this) { state ->
-            when (state.status) {
-                Status.LOADING -> AppUtil.startLoader(this)
-                Status.SUCCESS -> {
-                    AppUtil.stopLoader()
-                    val response = state.data ?: run {
-                        Toast.makeText(this, "Empty response", Toast.LENGTH_LONG).show()
-                        return@observe
+            viewModelUpload.uploadShopPdf(body).observe(this) { state ->
+                when (state.status) {
+
+                    Status.LOADING -> {
+                        AppUtil.startLoader(this)
                     }
-                    if (response.isSuccessful && response.body() != null) {
-                        val body = response.body()!!
-                        Toast.makeText(this, body.message, Toast.LENGTH_LONG).show()
-                        if (body.success) dialog.dismiss()
-                    } else {
-                        Toast.makeText(this, "Upload failed", Toast.LENGTH_LONG).show()
+
+                    Status.SUCCESS -> {
+                        AppUtil.stopLoader()
+
+                        val response = state.data
+
+                        if (response != null && response.isSuccessful) {
+
+                            val baseResponse = response.body()
+
+                            Toast.makeText(
+                                this,
+                                baseResponse?.message ?: "Upload successful",
+                                Toast.LENGTH_LONG
+                            ).show()
+
+                            if (baseResponse?.success == true) {
+                                dialog.dismiss()
+                            }
+
+                        } else {
+                            Toast.makeText(this, "Upload failed", Toast.LENGTH_LONG).show()
+                        }
                     }
-                }
-                Status.ERROR -> {
-                    AppUtil.stopLoader()
-                    Toast.makeText(this, state.message ?: "Network error", Toast.LENGTH_LONG).show()
+
+                    Status.ERROR -> {
+                        AppUtil.stopLoader()
+                        Toast.makeText(
+                            this,
+                            state.message ?: "Network error",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
                 }
             }
+
+        } catch (e: Exception) {
+            Toast.makeText(this, "File error: ${e.message}", Toast.LENGTH_LONG).show()
         }
     }
+
 
 
 
