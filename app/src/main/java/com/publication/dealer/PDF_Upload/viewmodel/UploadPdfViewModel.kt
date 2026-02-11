@@ -8,19 +8,23 @@ import com.publication.dealer.network.NetworkStates
 import com.publication.dealer.network.retofit.BaseResponse
 import com.publication.dealer.network.repo.Repository
 import kotlinx.coroutines.Dispatchers
+import okhttp3.MultipartBody
 import retrofit2.Response
 
 class UploadPdfViewModel(private val repository: Repository) : ViewModel() {
 
-    fun uploadPdf(request: PDFUploadRequest): LiveData<NetworkStates<Response<BaseResponse<Boolean>>>> {
-        return liveData(Dispatchers.IO) {
+    fun uploadShopPdf(
+        file: MultipartBody.Part
+    ): LiveData<NetworkStates<Response<BaseResponse<Any>>>> =
+        liveData(Dispatchers.IO) {
+
             emit(NetworkStates.loading(null))
             try {
-                val response = repository.uploadPdf(request)
+                val response = repository.uploadShopPdf(file)
                 emit(NetworkStates.success(response))
             } catch (e: Exception) {
                 emit(NetworkStates.error(null, e.message ?: "Something went wrong"))
             }
         }
-    }
+
 }
