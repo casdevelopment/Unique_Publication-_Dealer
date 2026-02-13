@@ -19,4 +19,6 @@
     <string name="inactivate_user_message">Enter a user id to inactivate user</string>
     <string name="inactivate_cancel">Cancel</string>
     <string name="inactivate_confirm">confirm</string>
+
+    <string name="empty_state_text">Select date range and click <b><font color="#3B4195">Show</font></b></string>
 </resources>

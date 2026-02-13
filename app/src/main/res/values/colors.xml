@@ -5,6 +5,7 @@
     <color name="primary_color">#3B4195</color>
     <color name="colorPrimaryVariant">#353A85</color>
     <color name="secondary_color">#F6CB0A</color>
+    <color name="primary_color_lite">#E0E0FF</color>
 
     <color name="teal_200">#3B4195</color>
     <color name="teal_700">#3B4195</color>
@@ -13,6 +14,15 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="orange">#FF9800</color>
+
+
+    <color name="orange_very_lite">#FFF9F0</color>
+
+    <!-- Light orange (your current one) -->
+    <color name="orangelite">#FFF4E0</color>
+
+    <!-- Slightly darker light orange -->
+    <color name="orangelight">#FFEDD1</color>
 
 
     <color name="debit_red">#e74c3c</color>

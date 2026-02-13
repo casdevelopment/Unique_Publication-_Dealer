@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="12dp"
+    android:layout_marginBottom="4dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="6dp"
+    app:strokeWidth="1dp"
+    android:backgroundTint="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="18dp">
+
+        <!-- Top Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <!-- Icon Circle -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:cardCornerRadius="25dp"
+                android:backgroundTint="#FFF4E0"
+                app:cardElevation="0dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/pdfpng"
+                    app:tint="#FB8C00"/>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Catalog Name -->
+            <TextView
+                android:id="@+id/tvCatalogName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:text="Catalog Name"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#212121"/>
+
+            <ImageView
+                android:id="@+id/editBtn"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/editicon"
+                app:tint="@color/debit_red"/>
+
+
+        </LinearLayout>
+
+        <!-- Board Name -->
+        <TextView
+            android:id="@+id/tvBoardName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Board: testboard"
+            android:textSize="14sp"
+            android:textColor="#757575"/>
+
+        <!-- Type Chip Style -->
+        <com.google.android.material.chip.Chip
+            android:id="@+id/tvCatalogType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="test type"
+            android:textColor="@color/primary_color"
+            app:chipBackgroundColor="@color/primary_color_lite"
+            app:chipCornerRadius="12dp"
+            app:chipStrokeWidth="0dp"
+            android:textSize="12sp"/>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="14dp"
+            android:background="#EEEEEE"/>
+
+        <!-- Bottom Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <!-- URL Preview -->
+<!--            <TextView-->
+<!--                android:id="@+id/tvCatalogUrl"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="https://apps.cyberasol.com/..."-->
+<!--                android:textSize="12sp"-->
+<!--                android:textColor="#9E9E9E"-->
+<!--                android:maxLines="1"-->
+<!--                android:ellipsize="end"-->
+<!--                android:visibility="gone"/>-->
+
+            <!-- View Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnViewPdf"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="View"
+                android:textAllCaps="false"
+                android:textSize="13sp"
+                android:textColor="@android:color/white"
+                android:paddingHorizontal="16dp"
+                app:cornerRadius="20dp"
+                android:backgroundTint="@color/primary_color"
+                android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

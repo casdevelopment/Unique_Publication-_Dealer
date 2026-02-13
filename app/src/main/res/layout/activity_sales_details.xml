@@ -42,8 +42,8 @@
 
         <ImageView
             android:id="@+id/btnPdf"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/pdfpng"
             app:tint="@color/primary_color" />
 

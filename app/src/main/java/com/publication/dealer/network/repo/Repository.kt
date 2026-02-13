@@ -1,6 +1,9 @@
 package com.publication.dealer.network.repo
 
 import com.publication.dealer.PDF_Upload.model.PDFUploadRequest
+import com.publication.dealer.admin_catalogue.model.AddCatalogRequestModel
+import com.publication.dealer.admin_notification.model.BroadCastRequestmodel
+import com.publication.dealer.admin_notification.model.SendUserNotificationRequestmodel
 import com.publication.dealer.create_user.model.SignUpRequestModel
 import com.publication.dealer.inactivate_user.model.InactivateUserRequest
 import com.publication.dealer.user_dashboard.model.DashBoardRequestModel
@@ -9,6 +12,7 @@ import com.publication.dealer.login.model.LoginRequestModel
 import com.publication.dealer.login.model.LoginResponseModel
 import com.publication.dealer.network.retofit.BaseResponse
 import com.publication.dealer.network.api.ApiInterface
+import com.publication.dealer.network.retofit.BaseResponseCatalog
 import com.publication.dealer.reset_password.model.ResetPasswordRequest
 import com.publication.dealer.sales.model.SalesDetailResponseModel
 import com.publication.dealer.sales.model.SalesRequestModel
@@ -26,7 +30,6 @@ import java.io.File
 class Repository(private val api: ApiInterface) {
 
 
-    // Login
     suspend fun login(loginData: LoginRequestModel): Response<BaseResponse<LoginResponseModel>> {
         return api.login(loginData)
     }
@@ -82,12 +85,38 @@ class Repository(private val api: ApiInterface) {
 
     suspend fun uploadShopPdf(
         file: MultipartBody.Part
-    ): Response<BaseResponse<Any>> {
+    ): Response<PDFUploadRequest> {
         return api.uploadShopPdf(file)
     }
 
+    suspend fun createCatalog(request: AddCatalogRequestModel): Response<BaseResponse<Any>> {
+        return api.createCatalog(request)
+    }
+
+    suspend fun getCatalog(): Response<BaseResponseCatalog<List<AddCatalogRequestModel>>> {
+        return api.getCatalog()
+    }
+
+    suspend fun getCatalogById(catalogId: Int): Response<BaseResponseCatalog<AddCatalogRequestModel>> {
+        return api.getCatalogById(catalogId)
+    }
+
+    suspend fun updateCatalog(request: AddCatalogRequestModel): Response<BaseResponse<Any>> {
+        return api.updateCatalog(request)
+    }
+
+    suspend fun broadCastNotification(request: BroadCastRequestmodel): Response<BaseResponse<Boolean>> {
+        return api.broadCastNotification(request)
+    }
+
+    suspend fun sendUserNotification(request: SendUserNotificationRequestmodel): Response<BaseResponse<Boolean>> {
+        return api.sendUserNotification(request)
+    }
 
 
+    suspend fun getNotificationById(id: String): Response<BaseResponse<List<BroadCastRequestmodel>>> {
+        return api.getNotificationById(id)
+    }
 
 
 }

@@ -8,34 +8,34 @@
     android:background="@drawable/dialog_background"
     android:layout_margin="20dp">
 
-    <!-- Title -->
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Upload File"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@color/primary_color"
-        android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+<!--    &lt;!&ndash; Title &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/tvTitle"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Upload File"-->
+<!--        android:textSize="20sp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:textColor="@color/primary_color"-->
+<!--        android:gravity="center"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"/>-->
 
-    <!-- Description -->
-    <TextView
-        android:id="@+id/tvDesc"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Select a PDF file to upload"
-        android:textSize="14sp"
-        android:textColor="@color/primary_color"
-        android:fontFamily="@font/jost_bold"
-        android:paddingTop="8dp"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+<!--    &lt;!&ndash; Description &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/tvDesc"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Select a PDF file to upload"-->
+<!--        android:textSize="14sp"-->
+<!--        android:textColor="@color/primary_color"-->
+<!--        android:fontFamily="@font/jost_bold"-->
+<!--        android:paddingTop="8dp"-->
+<!--        android:gravity="center"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/tvTitle"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"/>-->
 
     <!-- New Password -->
     <com.google.android.material.textfield.TextInputLayout
@@ -43,7 +43,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/tvDesc"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -53,6 +53,8 @@
             android:layout_height="wrap_content"
             android:text="No file selected"
             android:hint="Select file"
+            android:focusable="false"
+            android:clickable="false"
             android:inputType="text"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -80,7 +82,7 @@
         android:id="@+id/btnLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingTop="20dp"
+        android:paddingTop="40dp"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/userIdError"
@@ -94,6 +96,7 @@
             android:textStyle="bold"
             android:textColor="@color/white"
             android:text="Select PDF"
+            android:textSize="14dp"
             android:background="@drawable/button_primary"
             android:id="@+id/btnSelectPdf"
             />

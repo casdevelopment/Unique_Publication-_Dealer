@@ -7,9 +7,11 @@
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
     android:paddingBottom="20dp"
+    android:fitsSystemWindows = "true"
+    android:fillViewport="true"
     android:paddingTop="10dp">
 
-    <!-- Back Button -->
+
     <ImageView
         android:id="@+id/backBtn"
         android:layout_width="25dp"

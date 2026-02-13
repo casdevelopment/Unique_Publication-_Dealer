@@ -5,7 +5,6 @@ import com.bumptech.glide.Glide
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -20,16 +19,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.bumptech.glide.signature.ObjectKey
-import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.gson.Gson
 import com.publication.dealer.R
 import com.publication.dealer.SessionManager
-import com.publication.dealer.create_user.CreateUserActivity
 import com.publication.dealer.databinding.ActivityGraphDashBoardBinding
 import com.publication.dealer.image_upload.viewmodel.UploadImageViewModel
 import com.publication.dealer.login.model.LoginResponseModel
@@ -38,19 +30,17 @@ import com.publication.dealer.sales.SalesActivity
 import com.publication.dealer.splash.SplashActivity
 import com.publication.dealer.update_user_password.UpdateUserPasswordActivity
 import com.publication.dealer.update_user_profile.UpdateUserProfileActivity
-import com.publication.dealer.user_dashboard.model.DashBoardRequestModel
-import com.publication.dealer.user_dashboard.model.DashBoardResponseData
 import com.publication.dealer.user_dashboard.viewmodel.DashBoardViewModel
+import com.publication.dealer.user_notification.UserNotificationActivity
+import com.publication.dealer.user_product.ProductActivity
 import com.publication.dealer.util.AppConstants
+import com.publication.dealer.util.AppConstants.userData
 import com.publication.dealer.util.AppUtil
-import com.publication.dealer.util.showToast
-import org.json.JSONArray
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import java.io.FileOutputStream
-import java.text.SimpleDateFormat
-import java.util.*
+
 
 
 class GraphDashBoardActivity : AppCompatActivity() {
@@ -140,22 +130,23 @@ class GraphDashBoardActivity : AppCompatActivity() {
     }
     private fun setUserData() {
         with(binding) {
-            userName.text = AppConstants.userData?.userName ?: "N/A"
-            mobileNumber.text = AppConstants.userData?.mobileNumber ?: "N/A"
-            address.text = AppConstants.userData?.address ?: "N/A"
+            userName.text = userData?.userName ?: "N/A"
+            mobileNumber.text = userData?.mobileNumber ?: "N/A"
+            address.text =userData?.address ?: "N/A"
            // partyGroup.text = AppConstants.userData?.partyGroup ?: "N/A"
-            accountName.text = AppConstants.userData?.account_Name ?: "N/A"
+            accountName.text = userData?.account_Name ?: "N/A"
 
-            val imageUrl = AppConstants.userData?.shopimageurl
+            val imageUrl =userData?.shopimageurl
             if (!imageUrl.isNullOrEmpty()) {
+
+
                 Glide.with(this@GraphDashBoardActivity)
                     .load(imageUrl)
-                    .signature(ObjectKey(System.currentTimeMillis())) // 🔥 KEY LINE
-                    .placeholder(R.drawable.ic_user_placeholder)
-                    .error(R.drawable.ic_user_placeholder)
                     .centerCrop()
+                    .placeholder(R.drawable.ic_user_placeholder)
                     .into(profileImage)
             }
+
         }
     }
 
@@ -177,7 +168,7 @@ class GraphDashBoardActivity : AppCompatActivity() {
                 startActivity(Intent(this@GraphDashBoardActivity, SalesActivity::class.java))
             }
             btnOurProduct.setOnClickListener {
-                showToast("Coming Soon")
+                startActivity(Intent(this@GraphDashBoardActivity, ProductActivity::class.java))
             }
 
 
@@ -514,24 +505,24 @@ class GraphDashBoardActivity : AppCompatActivity() {
 //    }
 
     // Helper class to store monthly summaries
-    private data class MonthlySummary(
-        val month: String,
-        var totalDebit: Double = 0.0,
-        var totalCredit: Double = 0.0,
-        var transactionCount: Int = 0
-    ) {
-        fun addDebit(debit: Double) {
-            totalDebit += debit
-        }
-
-        fun addCredit(credit: Double) {
-            totalCredit += credit
-        }
-
-        fun addTransaction() {
-            transactionCount++
-        }
-    }
+//    private data class MonthlySummary(
+//        val month: String,
+//        var totalDebit: Double = 0.0,
+//        var totalCredit: Double = 0.0,
+//        var transactionCount: Int = 0
+//    ) {
+//        fun addDebit(debit: Double) {
+//            totalDebit += debit
+//        }
+//
+//        fun addCredit(credit: Double) {
+//            totalCredit += credit
+//        }
+//
+//        fun addTransaction() {
+//            transactionCount++
+//        }
+//    }
     private fun setupPopupMenu() {
         // Create ContextThemeWrapper for styling (optional)
         val wrapper = ContextThemeWrapper(this, R.style.PopupMenu)
@@ -548,14 +539,20 @@ class GraphDashBoardActivity : AppCompatActivity() {
                     true
                 }
                 R.id.action_logout -> {
+
                     logout()
+
                     true
                 }
                 R.id.action_profile -> {
+
                     navigateToUpdateProfileActivity()
+
                     true
                 }
                 R.id.action_notification -> {
+
+                    navigateToNotificationActivity()
 
                     true
                 }
@@ -583,9 +580,11 @@ class GraphDashBoardActivity : AppCompatActivity() {
     private fun openCamera() {
         val imageFile = File(cacheDir, "temp_image_${System.currentTimeMillis()}.jpg")
         cameraImageUri = FileProvider.getUriForFile(
+
             this,
             "$packageName.fileprovider",
             imageFile
+
         )
 
         cameraImageUri?.let { safeUri ->
@@ -688,14 +687,20 @@ class GraphDashBoardActivity : AppCompatActivity() {
     private fun navigateToUpdateProfileActivity() {
 
         startActivity(Intent(this@GraphDashBoardActivity, UpdateUserProfileActivity::class.java))
-        finish()
 
     }
 
     private fun navigateToUpdatePasswordActivity() {
 
         startActivity(Intent(this@GraphDashBoardActivity, UpdateUserPasswordActivity::class.java))
-        finish()
 
     }
+
+    private fun navigateToNotificationActivity() {
+
+        startActivity(Intent(this@GraphDashBoardActivity, UserNotificationActivity::class.java))
+
+    }
+
+
 }

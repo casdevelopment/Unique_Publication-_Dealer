@@ -23,6 +23,9 @@ import com.publication.dealer.PDF_Upload.model.PDFUploadRequest
 import com.publication.dealer.PDF_Upload.viewmodel.UploadPdfViewModel
 import com.publication.dealer.R
 import com.publication.dealer.SessionManager
+import com.publication.dealer.admin_catalogue.CatalogueActivity
+import com.publication.dealer.admin_notification.BroadcastNotificationActivity
+import com.publication.dealer.admin_notification.SendUserNotificationActivity
 import com.publication.dealer.create_user.CreateUserActivity
 import com.publication.dealer.create_user.model.SignUpResponseModel
 import com.publication.dealer.create_user.viewmodel.SignUpViewModel
@@ -56,13 +59,6 @@ class AdminDashBoardActivity : AppCompatActivity() {
 
     private lateinit var popupMenu: PopupMenu
 
-    private val viewModelUpload: UploadPdfViewModel by viewModel()
-
-    private val PDF_PICK_CODE = 1001
-    private var selectedPdfUri: Uri? = null
-    private var selectedPdfName: String? = null
-    private var pdfSelectedCallback: ((Uri, String) -> Unit)? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -85,7 +81,7 @@ class AdminDashBoardActivity : AppCompatActivity() {
             btnAddUsers.setOnClickListener {
 
                 startActivity(Intent(this@AdminDashBoardActivity, CreateUserActivity::class.java))
-                finish()
+                //finish()
 
             }
 
@@ -99,9 +95,16 @@ class AdminDashBoardActivity : AppCompatActivity() {
                 openInactivateUserDialog()
             }
 
-            btnOurProduct.setOnClickListener {
+            btnCatalogue.setOnClickListener {
 
-                showUploadPdfDialog()
+                startActivity(Intent(this@AdminDashBoardActivity, CatalogueActivity::class.java))
+                //finish()
+
+            }
+
+            btnNotification.setOnClickListener {
+
+                openNotificationDialog()
             }
 
         }
@@ -367,145 +370,33 @@ class AdminDashBoardActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun showUploadPdfDialog() {
+
+    private fun openNotificationDialog() {
+
         val dialog = Dialog(this@AdminDashBoardActivity)
-        dialog.setContentView(R.layout.dialog_upload_pdf)
-        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        dialog.setContentView(R.layout.dialog_notification)
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        val btnSelect = dialog.findViewById<Button>(R.id.btnSelectPdf)
-        val btnUpload = dialog.findViewById<Button>(R.id.btnUploadPdf)
-        val etSelectedPdf = dialog.findViewById<EditText>(R.id.etSelectedPdf)
+        val btnBroadcast = dialog.findViewById<Button>(R.id.btnBroadcast)
+        val btnSendUser = dialog.findViewById<Button>(R.id.btnSendUser)
 
-        // Select PDF
-        btnSelect.setOnClickListener {
-            val intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.type = "application/pdf"
-            startActivityForResult(intent, PDF_PICK_CODE)
+        btnBroadcast.setOnClickListener {
+
+            startActivity(Intent(this@AdminDashBoardActivity, BroadcastNotificationActivity::class.java))
+            dialog.dismiss()
         }
 
-        // Upload PDF
-        btnUpload.setOnClickListener {
-            if (selectedPdfUri != null) {
-                uploadPdf(selectedPdfUri!!, dialog)
-            } else {
-                Toast.makeText(this, "Please select a PDF first", Toast.LENGTH_SHORT).show()
-            }
-        }
+        btnSendUser.setOnClickListener {
 
-        // Update file name in EditText after selection
-        pdfSelectedCallback = { uri, name ->
-            selectedPdfUri = uri
-            selectedPdfName = name
-            etSelectedPdf.setText(name)
-        }
+            startActivity(Intent(this@AdminDashBoardActivity, SendUserNotificationActivity::class.java))
 
+            dialog.dismiss()
+        }
         dialog.show()
     }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PDF_PICK_CODE && resultCode == RESULT_OK) {
-            data?.data?.let { uri ->
-                val fileName = getFileName(uri)
-                pdfSelectedCallback?.invoke(uri, fileName)
-            }
-        }
-    }
-
-    // Helper to get PDF file name
-    private fun getFileName(uri: Uri): String {
-        var result: String? = null
-        if (uri.scheme == "content") {
-            val cursor = contentResolver.query(uri, null, null, null, null)
-            cursor?.use {
-                if (it.moveToFirst()) {
-                    result = it.getString(it.getColumnIndexOrThrow("_display_name"))
-                }
-            }
-        }
-        if (result == null) {
-            result = uri.path
-            val cut = result?.lastIndexOf('/') ?: -1
-            if (cut != -1) result = result?.substring(cut + 1)
-        }
-        return result ?: "file.pdf"
-    }
-
-    // Convert PDF to Base64 and call ViewModel
-    private fun uploadPdf(uri: Uri, dialog: Dialog) {
-
-        val adminId = AppConstants.userData?.userId ?: "Admin"
-
-        if (adminId.isEmpty()) {
-            Toast.makeText(this, "Admin ID not found!", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        try {
-            val inputStream = contentResolver.openInputStream(uri)
-            val file = File(cacheDir, getFileName(uri))
-
-            file.outputStream().use { outputStream ->
-                inputStream?.copyTo(outputStream)
-            }
-
-            val requestFile = file.asRequestBody("application/pdf".toMediaTypeOrNull())
-            val body = MultipartBody.Part.createFormData(
-                "file",  // 🔥 must match API parameter name
-                file.name,
-                requestFile
-            )
-
-            viewModelUpload.uploadShopPdf(body).observe(this) { state ->
-                when (state.status) {
-
-                    Status.LOADING -> {
-                        AppUtil.startLoader(this)
-                    }
-
-                    Status.SUCCESS -> {
-                        AppUtil.stopLoader()
-
-                        val response = state.data
-
-                        if (response != null && response.isSuccessful) {
-
-                            val baseResponse = response.body()
-
-                            Toast.makeText(
-                                this,
-                                baseResponse?.message ?: "Upload successful",
-                                Toast.LENGTH_LONG
-                            ).show()
-
-                            if (baseResponse?.success == true) {
-                                dialog.dismiss()
-                            }
-
-                        } else {
-                            Toast.makeText(this, "Upload failed", Toast.LENGTH_LONG).show()
-                        }
-                    }
-
-                    Status.ERROR -> {
-                        AppUtil.stopLoader()
-                        Toast.makeText(
-                            this,
-                            state.message ?: "Network error",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                }
-            }
-
-        } catch (e: Exception) {
-            Toast.makeText(this, "File error: ${e.message}", Toast.LENGTH_LONG).show()
-        }
-    }
-
-
-
-
 
 }

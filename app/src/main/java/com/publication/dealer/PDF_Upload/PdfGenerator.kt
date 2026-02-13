@@ -3,11 +3,14 @@ package com.publication.dealer.PDF_Upload
 import android.content.ContentValues
 import android.content.Context
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.drawable.ColorDrawable
 import android.graphics.pdf.PdfDocument
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
+import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
@@ -20,10 +23,15 @@ object PdfGenerator {
 
     fun createSalesPdf(context: Context, salesList: ArrayList<SalesDetailResponseModel>) {
 
-        // Show file name dialog immediately
         val dialog = android.app.Dialog(context)
         dialog.setContentView(R.layout.dialog_file_name)
         dialog.setCancelable(false)
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         val etFileName = dialog.findViewById<EditText>(R.id.etFileName)
         val btnCancel = dialog.findViewById<AppCompatButton>(R.id.btnCancel)
@@ -43,7 +51,6 @@ object PdfGenerator {
             }
         }
 
-        // Optional: nice width
         dialog.window?.setLayout(
             (context.resources.displayMetrics.widthPixels * 0.9).toInt(),
             android.view.ViewGroup.LayoutParams.WRAP_CONTENT
@@ -96,7 +103,7 @@ object PdfGenerator {
             paint.isFakeBoldText = false
             y += 20f
 
-            // Rows
+
             for (item in salesList) {
                 canvas.drawText(item.saleDate.take(10), 20f, y, paint)
                 canvas.drawText(item.itemName.take(28), 120f, y, paint)
@@ -114,10 +121,10 @@ object PdfGenerator {
                     canvas = page.canvas
                     y = 50f
 
-                    // Logo on new page
+
                     canvas.drawBitmap(scaledLogo, logoX, y - 40f, paint)
 
-                    // Header on new page
+
                     paint.isFakeBoldText = true
                     canvas.drawText("Date", 20f, y, paint)
                     canvas.drawText("Item", 120f, y, paint)
@@ -131,7 +138,7 @@ object PdfGenerator {
 
             document.finishPage(page)
 
-            // Save PDF
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 savePdfForAndroidQAndAbove(context, document, fileName)
             } else {

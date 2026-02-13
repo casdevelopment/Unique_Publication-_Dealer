@@ -15,7 +15,7 @@ class UploadPdfViewModel(private val repository: Repository) : ViewModel() {
 
     fun uploadShopPdf(
         file: MultipartBody.Part
-    ): LiveData<NetworkStates<Response<BaseResponse<Any>>>> =
+    ): LiveData<NetworkStates<Response<PDFUploadRequest>>> =
         liveData(Dispatchers.IO) {
 
             emit(NetworkStates.loading(null))
@@ -26,5 +26,4 @@ class UploadPdfViewModel(private val repository: Repository) : ViewModel() {
                 emit(NetworkStates.error(null, e.message ?: "Something went wrong"))
             }
         }
-
 }

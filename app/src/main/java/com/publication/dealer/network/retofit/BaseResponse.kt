@@ -6,3 +6,10 @@ data class BaseResponse<T>(
     val success: Boolean,
     val data: T?
 )
+
+data class BaseResponseCatalog<T>(
+    val count: Int,
+    val success: Boolean,
+    val data: T?
+)
+

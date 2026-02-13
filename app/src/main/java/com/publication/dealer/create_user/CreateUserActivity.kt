@@ -53,7 +53,6 @@ class CreateUserActivity : AppCompatActivity() {
 
     private fun navigateToAdminDashboard() {
 
-        startActivity(Intent(this@CreateUserActivity, AdminDashBoardActivity::class.java))
         finish()
     }
 
@@ -173,9 +172,8 @@ class CreateUserActivity : AppCompatActivity() {
                         Toast.makeText(this, body.message, Toast.LENGTH_LONG).show()
 
                         if (body.success) {
-                            startActivity(Intent(this, AdminDashBoardActivity::class.java)
-                            )
-                            finish()
+
+                            navigateToAdminDashboard()
                         }
 
                     }
