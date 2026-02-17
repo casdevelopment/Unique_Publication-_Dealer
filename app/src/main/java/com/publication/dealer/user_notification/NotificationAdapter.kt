@@ -7,7 +7,8 @@ import com.publication.dealer.admin_notification.model.BroadCastRequestmodel
 import com.publication.dealer.databinding.ItemNotificationBinding
 
 class NotificationAdapter(
-    private val list: List<BroadCastRequestmodel>
+    private val list: List<BroadCastRequestmodel>,
+    private val onItemClick: (BroadCastRequestmodel) -> Unit // Click listener
 ) : RecyclerView.Adapter<NotificationAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: ItemNotificationBinding) :
@@ -23,51 +24,16 @@ class NotificationAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
         val item = list[position]
 
         with(holder.binding) {
-
-            // Set Data
             tvTitle.text = item.title
             tvMessage.text = item.message
-           // tvCatalogType.text = item.catalogType
-            // tvCatalogUrl.text = item.catalogURL
 
-            // View PDF Click
-//            btnViewPdf.setOnClickListener {
-//
-//                if (!item.catalogURL.isNullOrEmpty()) {
-//
-//                    try {
-//                        val intent = Intent(Intent.ACTION_VIEW)
-//                        intent.setDataAndType(Uri.parse(item.catalogURL), "application/pdf")
-//                        intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
-//                        root.context.startActivity(intent)
-//
-//                    } catch (e: Exception) {
-//                        Toast.makeText(
-//                            root.context,
-//                            "No application found to open PDF",
-//                            Toast.LENGTH_SHORT
-//                        ).show()
-//                    }
-//
-//                } else {
-//                    Toast.makeText(
-//                        root.context,
-//                        "Invalid PDF URL",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-//            }
-//
-//            editBtn.setOnClickListener {
-//                val context = holder.itemView.context
-//                val intent = Intent(context, EditCatalogActivity::class.java)
-//                intent.putExtra("ID", item.id)
-//                context.startActivity(intent)
-//            }
+            // Handle click
+            root.setOnClickListener {
+                onItemClick(item)
+            }
         }
     }
 

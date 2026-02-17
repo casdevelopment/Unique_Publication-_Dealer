@@ -1,5 +1,6 @@
 package com.publication.dealer.user_notification
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -54,15 +55,33 @@ class UserNotificationActivity : AppCompatActivity() {
 
 
 
-    private fun setupRecyclerView() {
+//    private fun setupRecyclerView() {
+//
+//        adapter = NotificationAdapter(catalogList)
+//
+//        binding.rvNotifications.apply {
+//            layoutManager = LinearLayoutManager(this@UserNotificationActivity)
+//            adapter = this@UserNotificationActivity.adapter
+//        }
+//    }
 
-        adapter = NotificationAdapter(catalogList)
+    private fun setupRecyclerView() {
+        adapter = NotificationAdapter(catalogList) { notification ->
+            // Pass notification details to next screen
+            val intent = Intent(this, NotificationDetailActivity::class.java)
+            intent.putExtra("title", notification.title)
+            intent.putExtra("message", notification.message)
+            intent.putExtra("imageUrl", notification.imageurl) // if you have image URL
+            startActivity(intent)
+        }
+
 
         binding.rvNotifications.apply {
             layoutManager = LinearLayoutManager(this@UserNotificationActivity)
             adapter = this@UserNotificationActivity.adapter
         }
     }
+
 
     private fun callApi(userId: String) {
 

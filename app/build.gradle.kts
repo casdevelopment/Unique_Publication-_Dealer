@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("kotlin-parcelize")
+    id("com.google.gms.google-services")
+
 }
 
 android {
@@ -90,6 +92,19 @@ dependencies {
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     implementation ("com.github.bumptech.glide:glide:4.16.0")
+
+    // Firebase Messaging
+    implementation("com.google.firebase:firebase-messaging:23.3.1")
+
+    // Gson (for parsing data payload)
+    implementation("com.google.code.gson:gson:2.10.1")
+
+    // Optional: Logging
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
+
+    implementation("com.google.firebase:firebase-database:20.3.0")
+
+
 
 //
 //    implementation ("com.tom-roush:pdfbox-android:2.0.27.0")

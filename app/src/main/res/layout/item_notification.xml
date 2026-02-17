@@ -5,7 +5,9 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
     app:cardCornerRadius="14dp"
+    android:backgroundTint="@color/white"
     app:cardElevation="4dp">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,14 +33,6 @@
             android:textColor="#444444"
             android:layout_marginTop="6dp"/>
 
-        <TextView
-            android:id="@+id/tvDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="13 Feb 2026"
-            android:textSize="12sp"
-            android:textColor="#888888"
-            android:layout_marginTop="8dp"/>
 
     </LinearLayout>
 

@@ -229,7 +229,6 @@ class AdminDashBoardActivity : AppCompatActivity() {
     }
 
 
-
     private fun openInactivateUserDialog() {
 
         val dialog = Dialog(this@AdminDashBoardActivity)
@@ -369,7 +368,6 @@ class AdminDashBoardActivity : AppCompatActivity() {
             .setNegativeButton("No", null)
             .show()
     }
-
 
     private fun openNotificationDialog() {
 
