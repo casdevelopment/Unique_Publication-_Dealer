@@ -29,18 +29,18 @@
             android:background="#33000000" /> <!-- 20% black -->
 
         <!-- Menu icon top-right -->
-        <ImageView
-            android:id="@+id/option"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_gravity="top|end"
-            android:layout_margin="16dp"
-            android:padding="6dp"
-            android:src="@drawable/more"
-            app:tint="@color/white"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:elevation="4dp"
-            android:outlineProvider="background" />
+<!--        <ImageView-->
+<!--            android:id="@+id/option"-->
+<!--            android:layout_width="36dp"-->
+<!--            android:layout_height="36dp"-->
+<!--            android:layout_gravity="top|end"-->
+<!--            android:layout_margin="16dp"-->
+<!--            android:padding="6dp"-->
+<!--            android:src="@drawable/more"-->
+<!--            app:tint="@color/white"-->
+<!--            android:background="?attr/selectableItemBackgroundBorderless"-->
+<!--            android:elevation="4dp"-->
+<!--            android:outlineProvider="background" />-->
 
     </FrameLayout>
 
@@ -58,6 +58,19 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
+
         <!-- User Name -->
         <TextView
             android:id="@+id/userName"
@@ -67,7 +80,8 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/primary_color"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:layout_marginLeft="20dp"/>
 
         <!-- Account Name -->
         <TextView
@@ -78,7 +92,25 @@
             android:textSize="14sp"
             android:textColor="#666666"
             android:gravity="center"
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="20dp"/>
+
+    </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/option"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="top|end"
+                    android:layout_marginTop="16dp"
+                    android:padding="6dp"
+                    android:src="@drawable/more"
+                    app:tint="@color/black"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:elevation="4dp"
+                    android:outlineProvider="background" />
+
+    </LinearLayout>
 
         <!-- Address -->
         <LinearLayout

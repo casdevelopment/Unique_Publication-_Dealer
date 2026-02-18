@@ -45,6 +45,7 @@ object AppUtil {
         return dialog
     }
 
+
     fun setApiErrorResponse(response: ResponseBody?, code: Int = 200): String {
         val gson = Gson()
         val type = object : TypeToken<APIError?>() {}.type

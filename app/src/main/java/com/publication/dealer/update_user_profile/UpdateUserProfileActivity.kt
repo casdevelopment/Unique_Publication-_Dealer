@@ -142,7 +142,6 @@ class UpdateUserProfileActivity : AppCompatActivity() {
 
 
     private fun navigateToGraphDashboard() {
-        startActivity(Intent(this@UpdateUserProfileActivity, GraphDashBoardActivity::class.java))
         finish()
     }
 

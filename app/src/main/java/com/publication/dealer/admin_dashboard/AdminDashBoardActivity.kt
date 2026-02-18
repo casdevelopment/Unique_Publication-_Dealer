@@ -81,7 +81,6 @@ class AdminDashBoardActivity : AppCompatActivity() {
             btnAddUsers.setOnClickListener {
 
                 startActivity(Intent(this@AdminDashBoardActivity, CreateUserActivity::class.java))
-                //finish()
 
             }
 
@@ -98,7 +97,7 @@ class AdminDashBoardActivity : AppCompatActivity() {
             btnCatalogue.setOnClickListener {
 
                 startActivity(Intent(this@AdminDashBoardActivity, CatalogueActivity::class.java))
-                //finish()
+
 
             }
 

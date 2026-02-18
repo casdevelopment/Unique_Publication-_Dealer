@@ -123,7 +123,7 @@ class SendUserNotificationActivity : AppCompatActivity() {
                         return@observe
                     }
 
-                    // ✅ HTTP 2xx
+
                     if (response.isSuccessful && response.body() != null) {
 
                         val body = response.body()!!
@@ -135,7 +135,7 @@ class SendUserNotificationActivity : AppCompatActivity() {
                         }
 
                     }
-                    // ❗ HTTP error but API sent message (409, 400, etc)
+
                     else {
                         val errorMsg = try {
                             val errorJson = response.errorBody()?.string()

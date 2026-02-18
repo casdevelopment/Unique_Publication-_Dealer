@@ -16,7 +16,6 @@ import com.publication.dealer.sales.Adapters.SalesAdapter
 import com.publication.dealer.sales.model.SalesRequestModel
 import com.publication.dealer.sales.model.SalesResponseModel
 import com.publication.dealer.sales.viewmodel.SalesViewModel
-import com.publication.dealer.user_dashboard.GraphDashBoardActivity
 import com.publication.dealer.util.AppConstants
 import com.publication.dealer.util.AppUtil
 import com.publication.dealer.util.showToast
@@ -235,7 +234,6 @@ class SalesActivity : AppCompatActivity() {
 
     private fun navigateToGraphDashboard() {
 
-       // startActivity(Intent(this@SalesActivity, GraphDashBoardActivity::class.java))
         finish()
     }
 

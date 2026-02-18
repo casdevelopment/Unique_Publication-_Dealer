@@ -1,19 +1,16 @@
 package com.publication.dealer.update_user_password
 
-import android.content.Intent
-import android.net.Uri
+
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
-import com.publication.dealer.admin_dashboard.AdminDashBoardActivity
 import com.publication.dealer.databinding.ActivityUpdateUserPasswordBinding
 import com.publication.dealer.network.Status
 import com.publication.dealer.network.retofit.BaseResponse
 import com.publication.dealer.update_user_password.model.UpdateUserPasswordRequestModel
 import com.publication.dealer.update_user_password.viewmodel.UpdateUserPasswordViewModel
-import com.publication.dealer.user_dashboard.GraphDashBoardActivity
 import com.publication.dealer.util.AppConstants
 import com.publication.dealer.util.AppUtil
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -51,8 +48,8 @@ class UpdateUserPasswordActivity : AppCompatActivity() {
 
     private fun navigateToDashboard() {
 
-        startActivity(Intent(this@UpdateUserPasswordActivity, GraphDashBoardActivity::class.java))
         finish()
+
     }
 
     override fun onBackPressed() {
@@ -152,9 +149,8 @@ class UpdateUserPasswordActivity : AppCompatActivity() {
                         Toast.makeText(this, body.message, Toast.LENGTH_LONG).show()
 
                         if (body.success) {
-                            startActivity(Intent(this, GraphDashBoardActivity::class.java)
-                            )
-                            finish()
+
+                            navigateToDashboard()
                         }
 
                     }
