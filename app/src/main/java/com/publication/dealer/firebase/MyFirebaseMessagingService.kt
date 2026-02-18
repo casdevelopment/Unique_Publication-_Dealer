@@ -1,4 +1,5 @@
 package com.publication.dealer.firebase
+
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -12,7 +13,6 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.publication.dealer.R
-import com.publication.dealer.user_notification.UserNotificationActivity
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
@@ -20,32 +20,36 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         super.onNewToken(token)
         Log.d("FCM", "New token: $token")
 
-        // Subscribe again if token changes
+        // Subscribe to broadcast topic
         FirebaseMessaging.getInstance().subscribeToTopic("all")
-    }
 
+        // TODO → send updated token to your backend API
+        // sendTokenToServer(token)
+    }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
         Log.d("FCM", "Message received: $remoteMessage")
 
+        var title = "New Message"
+        var body = ""
+
         // Handle data payload
-        remoteMessage.data.isNotEmpty().let {
-            val title = remoteMessage.data["title"] ?: "New Message"
-            val body = remoteMessage.data["body"] ?: ""
-            val clickAction = remoteMessage.data["clickAction"] ?: ""
-            showNotification(title, body, clickAction)
+        if (remoteMessage.data.isNotEmpty()) {
+            title = remoteMessage.data["title"] ?: title
+            body = remoteMessage.data["body"] ?: body
         }
 
-        // Optional: Handle notification payload
+        // Handle notification payload as fallback
         remoteMessage.notification?.let {
-            val title = it.title ?: "New Notification"
-            val body = it.body ?: ""
-            showNotification(title, body, "")
+            title = it.title ?: title
+            body = it.body ?: body
         }
+
+        showNotification(title, body)
     }
 
-    private fun showNotification(title: String, body: String, clickAction: String) {
+    private fun showNotification(title: String, body: String) {
         val channelId = "default_channel"
         val channelName = "Default Channel"
         val notificationId = System.currentTimeMillis().toInt()
@@ -53,34 +57,39 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        // Create channel for O+
+        // Create notification channel for Android O+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,
                 channelName,
                 NotificationManager.IMPORTANCE_HIGH
-            )
-            channel.enableVibration(true)
-            channel.vibrationPattern = longArrayOf(0, 500, 100, 500)
+            ).apply {
+                enableLights(true)
+                enableVibration(true)
+                vibrationPattern = longArrayOf(0, 500, 100, 500)
+            }
             notificationManager.createNotificationChannel(channel)
         }
 
-        // Intent for click action
-        val intent = Intent(this, UserNotificationActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            putExtra("clickAction", clickAction)
+        // Launch app when notification is tapped
+        val launchIntent = packageManager.getLaunchIntentForPackage(packageName)?.apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }
 
-        val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE)
-        } else {
-            PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
-        }
+        val pendingIntent = PendingIntent.getActivity(
+            this,
+            0,
+            launchIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
 
         val notification = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.logo) // set your notification icon here
+            .setSmallIcon(R.drawable.logo)
             .setContentTitle(title)
             .setContentText(body)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(body))
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setCategory(NotificationCompat.CATEGORY_MESSAGE)
             .setAutoCancel(true)
             .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
             .setVibrate(longArrayOf(0, 500, 100, 500))

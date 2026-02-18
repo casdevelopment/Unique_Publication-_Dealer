@@ -104,7 +104,7 @@ class CreateUserActivity : AppCompatActivity() {
             binding.mobileNumberError.visibility = View.VISIBLE
             binding.mobileNumberError.setText ("mobile Number required")
             valid = false
-        }else if (binding.etMobileNumber.text.toString().trim().length < 11) {
+        }else if (binding.etMobileNumber.text.toString().trim().length != 11) {
             binding.mobileNumberError.visibility = View.VISIBLE
             binding.mobileNumberError.setText ("Mobile number must be at least 11 characters long.")
             valid = false

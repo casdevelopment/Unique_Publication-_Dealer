@@ -6,6 +6,7 @@
     <color name="colorPrimaryVariant">#353A85</color>
     <color name="secondary_color">#F6CB0A</color>
     <color name="primary_color_lite">#E0E0FF</color>
+    <color name="primary_light">#7C7FD1</color>
 
     <color name="teal_200">#3B4195</color>
     <color name="teal_700">#3B4195</color>

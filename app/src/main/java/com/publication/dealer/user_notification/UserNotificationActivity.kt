@@ -32,7 +32,7 @@ class UserNotificationActivity : AppCompatActivity() {
         setupClickListeners()
         setupRecyclerView()
 
-         userId = userData?.userName ?: "N/A"
+         userId = userData?.userId ?: "N/A"
 
     }
 

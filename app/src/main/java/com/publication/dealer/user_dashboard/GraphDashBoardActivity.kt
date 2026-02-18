@@ -164,11 +164,18 @@ class GraphDashBoardActivity : AppCompatActivity() {
                 popupMenu.show()
             }
 
-            viewSales.setOnClickListener {
+            sales.setOnClickListener {
                 startActivity(Intent(this@GraphDashBoardActivity, SalesActivity::class.java))
             }
-            btnOurProduct.setOnClickListener {
+            product.setOnClickListener {
                 startActivity(Intent(this@GraphDashBoardActivity, ProductActivity::class.java))
+            }
+
+            updateProfile.setOnClickListener {
+                navigateToUpdateProfileActivity()
+            }
+            notification.setOnClickListener {
+                navigateToNotificationActivity()
             }
 
 
@@ -544,18 +551,18 @@ class GraphDashBoardActivity : AppCompatActivity() {
 
                     true
                 }
-                R.id.action_profile -> {
-
-                    navigateToUpdateProfileActivity()
-
-                    true
-                }
-                R.id.action_notification -> {
-
-                    navigateToNotificationActivity()
-
-                    true
-                }
+//                R.id.action_profile -> {
+//
+//                    navigateToUpdateProfileActivity()
+//
+//                    true
+//                }
+//                R.id.action_notification -> {
+//
+//                    navigateToNotificationActivity()
+//
+//                    true
+//                }
                 else -> false
             }
         }
