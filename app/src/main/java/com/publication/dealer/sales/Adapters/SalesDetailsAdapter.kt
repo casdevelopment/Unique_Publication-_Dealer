@@ -18,10 +18,10 @@ class SalesDetailsAdapter(
 
         fun bind(item: SalesDetailResponseModel) {
 
-            binding.tvSno.text = "  S.No  "+item.sno.toString()
+            binding.tvSno.text = item.sno.toString()
             binding.tvSaleDate.text = "  " + formatDate(item.saleDate)
             binding.tvItemName.text = item.itemName
-            binding.tvItemCode.text = "  Code  "+item.itemCode.toString()
+            binding.tvItemCode.text =item.itemCode.toString()
 
 
 

@@ -76,15 +76,16 @@
                 android:background="@drawable/arrow_back"
                 android:layout_width="32dp"
                 android:layout_height="32dp"/>
+
             <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:text="Ledger Report"
-                android:textSize="20sp"
-                android:textStyle="bold"
                 android:textColor="@color/primary_color"
-                android:layout_marginLeft="20dp"/>
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
 
         </LinearLayout>
@@ -166,7 +167,7 @@
             android:id="@+id/tvEmptyState"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Select date range and click Fetch Report"
+            android:text="@string/empty_state_text"
             android:gravity="center"
             android:textSize="14sp"
             android:textColor="#7f8c8d"

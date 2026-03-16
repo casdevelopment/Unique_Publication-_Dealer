@@ -93,9 +93,19 @@
                     android:id="@+id/etMobileNumber1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Mobile Number"
-                    android:inputType="text"/>
+                    android:hint="Contact Number"
+                    android:inputType="number"/>
             </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/etMobileNumber1Error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="11sp"
+                android:visibility="gone"
+                android:layout_marginBottom="7dp"
+                android:layout_marginStart="10dp"/>
 
 
             <View
@@ -112,9 +122,19 @@
                     android:id="@+id/etMobileNumber2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Purchase Number 1"
-                    android:inputType="text"/>
+                    android:hint="Contact Number 2"
+                    android:inputType="number"/>
             </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/etMobileNumber2Error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="11sp"
+                android:visibility="gone"
+                android:layout_marginBottom="7dp"
+                android:layout_marginStart="10dp"/>
 
             <View
                 android:layout_width="match_parent"
@@ -129,9 +149,19 @@
                     android:id="@+id/etMobileNumber3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Purchase Number 2"
-                    android:inputType="text"/>
+                    android:hint="Contact Number 2"
+                    android:inputType="number"/>
             </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/etMobileNumber3Error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="11sp"
+                android:visibility="gone"
+                android:layout_marginBottom="7dp"
+                android:layout_marginStart="10dp"/>
 
 
             <View
@@ -170,6 +200,16 @@
                     android:hint="City"
                     android:inputType="text"/>
             </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/etCityError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="11sp"
+                android:visibility="gone"
+                android:layout_marginBottom="7dp"
+                android:layout_marginStart="10dp"/>
 
 
             <View
@@ -215,6 +255,34 @@
                 android:layout_height="6dp"/>
 
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Address"
+                    android:inputType="text"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/etAddressError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="11sp"
+                android:visibility="gone"
+                android:layout_marginBottom="7dp"
+                android:layout_marginStart="10dp"/>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="6dp"/>
+
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -227,6 +295,16 @@
                     android:hint="Postal Code"
                     android:inputType="text"/>
             </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/etPostalCodeError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="11sp"
+                android:visibility="gone"
+                android:layout_marginBottom="7dp"
+                android:layout_marginStart="10dp"/>
 
 
 

@@ -49,7 +49,6 @@
     </LinearLayout>
 
 
-    <!-- Compact Date Selection Row -->
     <LinearLayout
 
         android:gravity="center"
@@ -108,7 +107,7 @@
 
     </LinearLayout>
 
-    <!-- Content Area -->
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

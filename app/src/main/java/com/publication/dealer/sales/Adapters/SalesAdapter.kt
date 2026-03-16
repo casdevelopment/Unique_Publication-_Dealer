@@ -34,7 +34,7 @@ class SalesAdapter(
             binding.tvTotalBooks.text = " " + sales.totalBooks.toString()
 
             // Format amount with comma and 2 decimal points
-            binding.tvTotalAmount.text = sales.totalAmount.toString()
+            binding.tvTotalAmount.text = "Rs ${sales.totalAmount}"
 
 
             binding.viewDetails.setOnClickListener {

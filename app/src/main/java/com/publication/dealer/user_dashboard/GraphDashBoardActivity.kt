@@ -120,12 +120,18 @@ class GraphDashBoardActivity : AppCompatActivity() {
         }
 
         setupClickListeners()
-        setUserData()
+
         //setupBarChart()
         //val dashBoardResponseData = DashBoardRequestModel(getFirstDateOfCurrentYear(), getCurrentDate())
        // callApi(dashBoardResponseData)
         setupPopupMenu()
 
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setUserData()
 
     }
     private fun setUserData() {
@@ -155,9 +161,9 @@ class GraphDashBoardActivity : AppCompatActivity() {
         with(binding){
 
 
-//            viewReport.setOnClickListener {
-//                startActivity(Intent(this@GraphDashBoardActivity, MainDashBoardActivity::class.java))
-//            }
+            viewReport.setOnClickListener {
+                startActivity(Intent(this@GraphDashBoardActivity, MainDashBoardActivity::class.java))
+            }
 
             option.setOnClickListener {
                 Log.v("option","option click")

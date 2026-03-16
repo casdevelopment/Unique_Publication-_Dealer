@@ -24,6 +24,7 @@ import com.publication.dealer.R
 import com.publication.dealer.SessionManager
 import com.publication.dealer.admin_dashboard.AdminDashBoardActivity
 import com.publication.dealer.network.Status
+import com.publication.dealer.sales.model.SalesRequestModel
 import com.publication.dealer.splash.SplashActivity
 import com.publication.dealer.update_user_profile.UpdateUserProfileActivity
 import com.publication.dealer.user_dashboard.adapter.DashBoardAdapter
@@ -53,12 +54,13 @@ class MainDashBoardActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityMainDashBoardBinding.inflate(layoutInflater)
         setContentView(binding.root)
-      //  setContentView(R.layout.activity_main_dash_board)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainLayout)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+
+        val today = Calendar.getInstance()
+        selectedDateTo = today.time  // Today
+
+        val pastDate = Calendar.getInstance()
+        pastDate.add(Calendar.DAY_OF_MONTH, -90) // 90 days back
+        selectedDateFrom = pastDate.time
         updateDateDisplays()
         setupClickListeners()
 //        setUserData()
@@ -142,15 +144,15 @@ class MainDashBoardActivity : AppCompatActivity() {
         binding.tvSelectedDateTo.isSelected = selectedDateTo != null
 
         // Enable/disable fetch button based on selection
-     //   binding.btnFetchData.isEnabled = selectedDateFrom != null && selectedDateTo != null
+        //   binding.btnFetchData.isEnabled = selectedDateFrom != null && selectedDateTo != null
 
-       /* if (binding.btnFetchData.isEnabled) {
-            binding.btnFetchData.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_green_dark))
-            binding.btnFetchData.setTextColor(ContextCompat.getColor(this, android.R.color.white))
-        } else {
-            binding.btnFetchData.setBackgroundColor(ContextCompat.getColor(this, android.R.color.darker_gray))
-            binding.btnFetchData.setTextColor(ContextCompat.getColor(this, android.R.color.white))
-        }*/
+        /* if (binding.btnFetchData.isEnabled) {
+             binding.btnFetchData.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_green_dark))
+             binding.btnFetchData.setTextColor(ContextCompat.getColor(this, android.R.color.white))
+         } else {
+             binding.btnFetchData.setBackgroundColor(ContextCompat.getColor(this, android.R.color.darker_gray))
+             binding.btnFetchData.setTextColor(ContextCompat.getColor(this, android.R.color.white))
+         }*/
     }
 
     private fun fetchLedgerData() {
@@ -169,11 +171,24 @@ class MainDashBoardActivity : AppCompatActivity() {
             return
         }
 
-        val dashBoardResponseData = DashBoardRequestModel(dateFrom, dateTo)
+        val DashBoardRequest = DashBoardRequestModel(dateFrom, dateTo)
 
-        callApi(dashBoardResponseData)
+        callApi(DashBoardRequest)
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private fun callApi(dashBoardResponseData: DashBoardRequestModel) {
         viewModel.dashBoardData(dashBoardResponseData).observe(this) { apiResponse ->
@@ -260,8 +275,6 @@ class MainDashBoardActivity : AppCompatActivity() {
 //    }
 
     private fun navigateToGraphDashboard() {
-
-       // startActivity(Intent(this@MainDashBoardActivity, GraphDashBoardActivity::class.java))
         finish()
     }
 

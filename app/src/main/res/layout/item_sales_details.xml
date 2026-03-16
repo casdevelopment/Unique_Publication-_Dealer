@@ -29,15 +29,30 @@
                 android:maxLines="2"
                 android:ellipsize="end"/>
 
-            <!-- Sale Info -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  S.No  "
+                android:textSize="12sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                />
+
             <TextView
                 android:id="@+id/tvSno"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="S.No: 4644539 "
+                tools:text="4644539"
                 android:textSize="12sp"
-                android:textColor="@color/primary_color"
-                android:layout_marginBottom="2dp"/>
+                android:textColor="@color/primary_color" />
+
+        </LinearLayout>
 
             <TextView
                 android:id="@+id/tvSaleDate"
@@ -48,17 +63,32 @@
                 android:textColor="@color/primary_color"
                 android:layout_marginBottom="4dp"/>
 
-            <!-- Item Code -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  Code  "
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
+
+
             <TextView
                 android:id="@+id/tvItemCode"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Item Code: 900003105"
+                tools:text="900003105"
                 android:textSize="12sp"
-                android:textColor="@color/primary_color"
-                android:layout_marginBottom="12dp"/>
+                android:textColor="@color/primary_color" />
 
-            <!-- Top Row: Printed Price & Discount -->
+        </LinearLayout>
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

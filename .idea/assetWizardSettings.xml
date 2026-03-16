@@ -29,8 +29,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="add_notification" />
-                            <entry key="sourceFile" value="C:\Users\Dell\Downloads\bell-add-svgrepo-com.svg" />
+                            <entry key="outputName" value="reportsvgicon" />
+                            <entry key="sourceFile" value="C:\Users\Dell\Downloads\reportsvgicon.svg" />
                           </map>
                         </option>
                       </PersistentState>

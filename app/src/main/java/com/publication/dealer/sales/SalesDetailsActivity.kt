@@ -85,6 +85,6 @@ class SalesDetailsActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        finish()
+        navigateToSalesActivity()
     }
 }

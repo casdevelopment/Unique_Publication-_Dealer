@@ -32,7 +32,6 @@ class SalesActivity : AppCompatActivity() {
     private val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
     private val viewModel: SalesViewModel by viewModel()
-    private val sessionManager: SessionManager by inject()
 
     private var selectedDateFrom: Date? = null
     private var selectedDateTo: Date? = null

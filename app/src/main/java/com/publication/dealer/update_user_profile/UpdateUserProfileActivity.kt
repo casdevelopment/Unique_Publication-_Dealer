@@ -38,8 +38,13 @@ class UpdateUserProfileActivity : AppCompatActivity() {
     private fun setupClickListeners() {
         with(binding) {
             backBtn.setOnClickListener { navigateToGraphDashboard() }
+
+
             updateBtn.setOnClickListener {
+
+                if (validateInputs()) {
                     callUpdateUserApi()
+                }
             }
         }
     }
@@ -48,12 +53,13 @@ class UpdateUserProfileActivity : AppCompatActivity() {
         with(binding) {
             etUserId.setText(cleanValue(AppConstants.userData?.userId))
             etMobileNumber1.setText(cleanValue(AppConstants.userData?.mobileNumber))
-            etMobileNumber2.setText(cleanValue(AppConstants.userData?.purchaseNumber1))
-            etMobileNumber3.setText(cleanValue(AppConstants.userData?.purchaseNumber2))
+            etMobileNumber2.setText(cleanValue(AppConstants.userData?.mobileNumber2))
+            etMobileNumber3.setText(cleanValue(AppConstants.userData?.mobileNumber3))
             etTown.setText(cleanValue(AppConstants.userData?.town))
             etCity.setText(cleanValue(AppConstants.userData?.city))
             etDistrict.setText(cleanValue(AppConstants.userData?.district))
             etProvince.setText(cleanValue(AppConstants.userData?.province))
+            etAddress.setText(cleanValue(AppConstants.userData?.address))
             etPostalCode.setText(cleanValue(AppConstants.userData?.postalCode))
         }
     }
@@ -66,23 +72,90 @@ class UpdateUserProfileActivity : AppCompatActivity() {
         }
     }
 
+    private fun validateInputs(): Boolean {
+        var valid = true
 
+        binding.etMobileNumber1Error.visibility = View.GONE
+        binding.etCityError.visibility = View.GONE
+        binding.etAddressError.visibility = View.GONE
+        binding.etPostalCodeError.visibility = View.GONE
+        binding.etMobileNumber2Error.visibility = View.GONE
+        binding.etMobileNumber3Error.visibility = View.GONE
+
+
+
+
+        val mobileNumber = binding.etMobileNumber1.text.toString().trim()
+        if (mobileNumber.isEmpty()) {
+            binding.etMobileNumber1Error.visibility = View.VISIBLE
+            binding.etMobileNumber1Error.text = "Contact Number Required"
+            valid = false
+        } else if (!mobileNumber.matches(Regex("^\\d{11}$"))){
+            binding.etMobileNumber1Error.visibility = View.VISIBLE
+            binding.etMobileNumber1Error.text = "Enter valid phone number"
+            valid = false
+        }
+
+        val mobileNumber2 = binding.etMobileNumber2.text.toString().trim()
+        if (mobileNumber2.isNotEmpty() && !mobileNumber2.matches(Regex("^\\d{11}$"))){
+            binding.etMobileNumber2Error.visibility = View.VISIBLE
+            binding.etMobileNumber2Error.text = "Enter valid phone number"
+            valid = false
+        }
+
+        val mobileNumber3 = binding.etMobileNumber3.text.toString().trim()
+        if (mobileNumber3.isNotEmpty() && !mobileNumber3.matches(Regex("^\\d{11}$"))){
+            binding.etMobileNumber3Error.visibility = View.VISIBLE
+            binding.etMobileNumber3Error.text = "Enter valid phone number"
+            valid = false
+        }
+
+
+        val city = binding.etCity.text.toString().trim()
+        if (city.isEmpty()) {
+            binding.etCityError.visibility = View.VISIBLE
+            binding.etCityError.text = "City Required"
+            valid = false
+        }
+
+
+        val address = binding.etAddress.text.toString().trim()
+        if (address.isEmpty()) {
+            binding.etAddressError.visibility = View.VISIBLE
+            binding.etAddressError.text = "Address Required"
+            valid = false
+        }
+
+
+        val postalCode = binding.etPostalCode.text.toString().trim()
+        if (postalCode.isEmpty()) {
+            binding.etPostalCodeError.visibility = View.VISIBLE
+            binding.etPostalCodeError.text = "Postal Code Required"
+            valid = false
+        }
+
+
+
+        return valid
+    }
 
     private fun callUpdateUserApi() {
         val updateUserRequest = UpdateUserModel(
             userId = binding.etUserId.text.toString().trim(),
             mobileNumber = binding.etMobileNumber1.text.toString().trim(),
-            purchaseNumber1 = binding.etMobileNumber2.text.toString().trim(),
-            purchaseNumber2 = binding.etMobileNumber3.text.toString().trim(),
+            mobileNumber2 = binding.etMobileNumber2.text.toString().trim(),
+            mobileNumber3 = binding.etMobileNumber3.text.toString().trim(),
             remarks = "Self Update",
             town = binding.etTown.text.toString().trim(),
             city = binding.etCity.text.toString().trim(),
             district = binding.etDistrict.text.toString().trim(),
             province = binding.etProvince.text.toString().trim(),
+            address = binding.etAddress.text.toString().trim(),
             postalCode = binding.etPostalCode.text.toString().trim(),
             fcmToken = "Token",
             modifiedBy = AppConstants.userData?.userId ?: ""
         )
+
 
         viewModel.updateUser(updateUserRequest).observe(this) { state ->
             when (state.status) {
@@ -100,23 +173,22 @@ class UpdateUserProfileActivity : AppCompatActivity() {
 
                             AppConstants.userData?.apply {
                                 mobileNumber = updateUserRequest.mobileNumber
-                                purchaseNumber1 = updateUserRequest.purchaseNumber1
-                                purchaseNumber2 = updateUserRequest.purchaseNumber2
+                                mobileNumber2 = updateUserRequest.mobileNumber2
+                                mobileNumber3 = updateUserRequest.mobileNumber3
                                 remarks = updateUserRequest.remarks
                                 town = updateUserRequest.town
                                 city = updateUserRequest.city
                                 district = updateUserRequest.district
                                 province = updateUserRequest.province
                                 postalCode = updateUserRequest.postalCode
+                                address = updateUserRequest.address
                             }
 
-                            AppConstants.userData?.let { updatedUser ->
-                                sessionManager.userInfo(Gson().toJson(updatedUser))
-                            }
+                        AppConstants.userData?.let { updatedUser ->
+                            sessionManager.userInfo(Gson().toJson(updatedUser))
+                        }
 
-                        startActivity(Intent(this, GraphDashBoardActivity::class.java))
-                            finish()
-
+                        navigateToGraphDashboard()
 
 
                     } else {
