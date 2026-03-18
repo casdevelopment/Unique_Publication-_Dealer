@@ -51,7 +51,9 @@ class UpdateUserProfileActivity : AppCompatActivity() {
 
     private fun showUserDetails() {
         with(binding) {
+
             etUserId.setText(cleanValue(AppConstants.userData?.userId))
+            etPurchaserName.setText(cleanValue(AppConstants.userData?.purchaser))
             etMobileNumber1.setText(cleanValue(AppConstants.userData?.mobileNumber))
             etMobileNumber2.setText(cleanValue(AppConstants.userData?.mobileNumber2))
             etMobileNumber3.setText(cleanValue(AppConstants.userData?.mobileNumber3))
@@ -142,6 +144,8 @@ class UpdateUserProfileActivity : AppCompatActivity() {
     private fun callUpdateUserApi() {
         val updateUserRequest = UpdateUserModel(
             userId = binding.etUserId.text.toString().trim(),
+            purchaser= binding.etPurchaserName.text.toString().trim(),
+            purchaser_Phone = " ",
             mobileNumber = binding.etMobileNumber1.text.toString().trim(),
             mobileNumber2 = binding.etMobileNumber2.text.toString().trim(),
             mobileNumber3 = binding.etMobileNumber3.text.toString().trim(),
@@ -175,6 +179,8 @@ class UpdateUserProfileActivity : AppCompatActivity() {
                                 mobileNumber = updateUserRequest.mobileNumber
                                 mobileNumber2 = updateUserRequest.mobileNumber2
                                 mobileNumber3 = updateUserRequest.mobileNumber3
+                                purchaser = updateUserRequest.purchaser
+                                purchaser_Phone = updateUserRequest.purchaser_Phone
                                 remarks = updateUserRequest.remarks
                                 town = updateUserRequest.town
                                 city = updateUserRequest.city

@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.publication.dealer.SessionManager
 import com.publication.dealer.databinding.ActivitySalesBinding
 import com.publication.dealer.network.Status
 import com.publication.dealer.sales.Adapters.SalesAdapter
@@ -19,7 +18,6 @@ import com.publication.dealer.sales.viewmodel.SalesViewModel
 import com.publication.dealer.util.AppConstants
 import com.publication.dealer.util.AppUtil
 import com.publication.dealer.util.showToast
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -51,7 +49,7 @@ class SalesActivity : AppCompatActivity() {
         selectedDateTo = today.time  // Today
 
         val pastDate = Calendar.getInstance()
-        pastDate.add(Calendar.DAY_OF_MONTH, -90) // 90 days back
+        pastDate.add(Calendar.DAY_OF_MONTH, -90)
         selectedDateFrom = pastDate.time
 
         updateDateDisplays()
@@ -226,11 +224,6 @@ class SalesActivity : AppCompatActivity() {
         }
     }
 
-
-
-
-
-
     private fun navigateToGraphDashboard() {
 
         finish()
@@ -238,6 +231,6 @@ class SalesActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        finish()
+        navigateToGraphDashboard()
     }
 }

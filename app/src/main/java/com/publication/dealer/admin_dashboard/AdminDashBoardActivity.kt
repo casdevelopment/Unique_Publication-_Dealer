@@ -120,8 +120,6 @@ class AdminDashBoardActivity : AppCompatActivity() {
         }
     }
 
-
-
     private fun openResetPasswordDialog() {
 
         val dialog = Dialog(this@AdminDashBoardActivity)

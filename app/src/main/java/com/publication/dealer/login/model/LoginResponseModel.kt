@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName
 data class LoginResponseModel(
 
 
+    var purchaser : String?=null,
+    var purchaser_Phone : String?=null,
+
     val userId : String?=null,
     val userName : String?=null,
     val password: String?=null,

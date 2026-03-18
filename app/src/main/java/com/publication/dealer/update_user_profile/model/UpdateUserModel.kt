@@ -3,6 +3,8 @@ package com.publication.dealer.update_user_profile.model
 data class UpdateUserModel (
 
     val userId : String,
+    val purchaser: String,
+    val purchaser_Phone: String,
     val mobileNumber: String,
     val mobileNumber2: String?,
     val mobileNumber3: String?,
