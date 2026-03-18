@@ -80,31 +80,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="6dp"/>
 
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etPurchaserName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Purchaser Name"
-                    android:inputType="text"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="6dp"/>
-
-
-            <!-- mobile numbers -->
-
-
-
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -131,6 +106,33 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="6dp"/>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPurchaserName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Purchaser Name"
+                    android:inputType="text"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="6dp"/>
+
+
+            <!-- mobile numbers -->
+
+
+
+
 
 
 
@@ -169,7 +171,7 @@
                     android:id="@+id/etMobileNumber3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Contact Number 2"
+                    android:hint="Contact Number 3"
                     android:inputType="number"/>
             </com.google.android.material.textfield.TextInputLayout>
 
