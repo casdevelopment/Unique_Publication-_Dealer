@@ -101,6 +101,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun callLoginApi() {
+        Log.d("FCM_TOKEN--", "callLoginApi fcmToken "+fcmToken)
         // Ensure token is available; if not, send empty string
         val loginRequest = LoginRequestModel(
             userId = binding.etUserId.text.toString().trim(),
