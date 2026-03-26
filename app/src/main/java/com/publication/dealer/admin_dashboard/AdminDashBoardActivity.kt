@@ -23,6 +23,7 @@ import com.publication.dealer.PDF_Upload.model.PDFUploadRequest
 import com.publication.dealer.PDF_Upload.viewmodel.UploadPdfViewModel
 import com.publication.dealer.R
 import com.publication.dealer.SessionManager
+import com.publication.dealer.admin_branding.AdminBrandingActivity
 import com.publication.dealer.admin_catalogue.CatalogueActivity
 import com.publication.dealer.admin_notification.BroadcastNotificationActivity
 import com.publication.dealer.admin_notification.SendUserNotificationActivity
@@ -104,6 +105,13 @@ class AdminDashBoardActivity : AppCompatActivity() {
             btnNotification.setOnClickListener {
 
                 openNotificationDialog()
+            }
+
+            btnBranding.setOnClickListener {
+
+                startActivity(Intent(this@AdminDashBoardActivity, AdminBrandingActivity::class.java))
+
+
             }
 
         }

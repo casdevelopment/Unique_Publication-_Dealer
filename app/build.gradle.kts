@@ -104,6 +104,14 @@ dependencies {
 
     implementation("com.google.firebase:firebase-database:20.3.0")
 
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
+
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+
+    implementation ("com.google.android.material:material:1.11.0")
+
+    implementation ("com.github.chrisbanes:PhotoView:2.3.0")
+
 
 
 //

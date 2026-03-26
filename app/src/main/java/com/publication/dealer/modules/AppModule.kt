@@ -5,12 +5,14 @@ import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
 import com.publication.dealer.PDF_Upload.viewmodel.UploadPdfViewModel
 import com.publication.dealer.SessionManager
+import com.publication.dealer.admin_branding.viewmodel.GetAdminBrandingViewModel
 import com.publication.dealer.admin_catalogue.viewmodel.CreateCatalogViewModel
 import com.publication.dealer.admin_catalogue.viewmodel.GetCatalogByIdViewModel
 import com.publication.dealer.admin_catalogue.viewmodel.GetCatalogViewModel
 import com.publication.dealer.admin_catalogue.viewmodel.UpdateCatalogViewModel
 import com.publication.dealer.admin_notification.viewmodel.BroadCastNotificationViewModel
 import com.publication.dealer.admin_notification.viewmodel.SendUserNotificationViewModel
+import com.publication.dealer.branding.viewmodel.AddBrandingViewModel
 import com.publication.dealer.create_user.viewmodel.SignUpViewModel
 import com.publication.dealer.image_upload.viewmodel.UploadImageViewModel
 import com.publication.dealer.inactivate_user.viewmodel.InactivateUserViewModel
@@ -57,6 +59,11 @@ val viewModelModule= module{
     viewModel { BroadCastNotificationViewModel(get()) }
     viewModel { SendUserNotificationViewModel(get()) }
     viewModel { GetNotificationByIdViewModel(get()) }
+
+    viewModel { GetAdminBrandingViewModel(get()) }
+
+    viewModel { AddBrandingViewModel(get()) }
+
 
     }
 
