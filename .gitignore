@@ -48,3 +48,5 @@
 /.idea/migrations.xml
 /.idea/misc.xml
 /.idea/runConfigurations.xml
+config.bat
+node_modules
