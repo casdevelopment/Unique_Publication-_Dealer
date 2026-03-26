@@ -1,9 +1,12 @@
 package com.publication.dealer.network.api
 
 import com.publication.dealer.PDF_Upload.model.PDFUploadRequest
+import com.publication.dealer.admin_branding.model.UserBrandingModel
+import com.publication.dealer.admin_branding.model.UserResponseModel
 import com.publication.dealer.admin_catalogue.model.AddCatalogRequestModel
 import com.publication.dealer.admin_notification.model.BroadCastRequestmodel
 import com.publication.dealer.admin_notification.model.SendUserNotificationRequestmodel
+import com.publication.dealer.branding.model.AddBrandingModel
 import com.publication.dealer.create_user.model.SignUpRequestModel
 import com.publication.dealer.inactivate_user.model.InactivateUserRequest
 import com.publication.dealer.user_dashboard.model.DashBoardRequestModel
@@ -109,5 +112,24 @@ interface ApiInterface {
         @Query("UserId") userId: String
     ): Response<BaseResponse<List<BroadCastRequestmodel>>>
 
+
+
+    @POST("Dealer/get-users")
+    suspend fun getAllUsers( @Query("AdminUserID") adminUserId: String): Response<BaseResponse<List<UserResponseModel>>>
+
+
+    @Multipart
+    @POST("Dealer/upload-shop-imagehording")
+    suspend fun addBranding(
+        @Part("userId") userIdBody: RequestBody? = null,
+        @Part("type") type: RequestBody? = null,
+        @Part file: MultipartBody.Part? = null
+    ): Response<AddBrandingModel>
+
+
+    @POST("Dealer/get-hordingusersbyid")
+    suspend fun getUserBranding(
+        @Query("userid") userid: String
+    ): Response<BaseResponse<List<UserBrandingModel>>>
 
 }

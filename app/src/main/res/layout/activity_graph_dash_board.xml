@@ -416,7 +416,8 @@
                 android:layout_weight="1"
                 android:backgroundTint="@color/primary_light"
                 android:background="@drawable/rounded_card_bg"
-                android:gravity="center">
+                android:gravity="center"
+                android:layout_marginEnd="10dp">
 
                 <ImageView
                     android:layout_width="35dp"
@@ -437,45 +438,35 @@
 
             </LinearLayout>
 
-<!--            <LinearLayout-->
-<!--                android:id="@+id/updateProfile"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:orientation="vertical"-->
-<!--                android:padding="16dp"-->
-<!--                android:layout_weight="1"-->
-<!--                android:backgroundTint="@color/primary_light"-->
-<!--                android:background="@drawable/rounded_card_bg"-->
-<!--                android:gravity="center">-->
+            <LinearLayout
+                android:id="@+id/viewBranding"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/primary_light"
+                android:background="@drawable/rounded_card_bg"
+                android:gravity="center">
 
-<!--                <ImageView-->
-<!--                    android:layout_width="25dp"-->
-<!--                    android:layout_height="25dp"-->
-<!--                    android:src="@drawable/edit_icon"-->
-<!--                    android:contentDescription="icon"-->
-<!--                    app:tint="@color/white"/>-->
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/brandingsvg"
+                    android:contentDescription="icon"
+                    app:tint="@color/white"/>
 
-<!--                <TextView-->
-<!--                    android:id="@+id/tvShopvisited"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_marginTop="8dp"-->
-<!--                    android:text="Update Profile"-->
-<!--                    android:textStyle="bold"-->
-<!--                    android:textSize="16sp"-->
-<!--                    android:textColor="@color/white" />-->
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Branding"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="@color/white" />
 
-<!--                &lt;!&ndash;                <TextView&ndash;&gt;-->
-<!--                &lt;!&ndash;                    android:layout_height="wrap_content"&ndash;&gt;-->
-<!--                &lt;!&ndash;                    android:layout_width="wrap_content"&ndash;&gt;-->
-<!--                &lt;!&ndash;                    android:text="Due payment"&ndash;&gt;-->
-<!--                &lt;!&ndash;                    android:textStyle="bold"&ndash;&gt;-->
-<!--                &lt;!&ndash;                    android:fontFamily="@font/poppins"&ndash;&gt;-->
-<!--                &lt;!&ndash;                    android:textSize="13sp"&ndash;&gt;-->
-<!--                &lt;!&ndash;                    android:textColor="@color/blackLight"&ndash;&gt;-->
-<!--                &lt;!&ndash;                    android:gravity="center"/>&ndash;&gt;-->
 
-<!--            </LinearLayout>-->
+            </LinearLayout>
 
         </LinearLayout>
 
