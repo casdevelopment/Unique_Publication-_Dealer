@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows = "true"
+    android:fillViewport="true"
+    android:background="@color/white">
+
+    <!-- Full screen zoomable image -->
+    <com.github.chrisbanes.photoview.PhotoView
+        android:id="@+id/ivPaymentSlip"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:contentDescription="Full Screen Image"
+        android:background="@color/white" />
+
+    <!-- Back button overlay -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/backArrow"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:cardCornerRadius="12dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="15dp"
+        app:cardElevation="0dp"
+        android:backgroundTint="@color/white"
+        android:layout_gravity="top|start">
+
+        <ImageView
+            android:id="@+id/backBtn"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/arrow_back"
+            app:tint="@color/primary_color"
+            android:contentDescription="Back"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:focusable="true" />
+
+    </androidx.cardview.widget.CardView>
+
+
+</FrameLayout>
+
