@@ -22,6 +22,7 @@ import com.bumptech.glide.signature.ObjectKey
 import com.google.gson.Gson
 import com.publication.dealer.R
 import com.publication.dealer.SessionManager
+import com.publication.dealer.branding.BrandingActivity
 import com.publication.dealer.databinding.ActivityGraphDashBoardBinding
 import com.publication.dealer.image_upload.viewmodel.UploadImageViewModel
 import com.publication.dealer.login.model.LoginResponseModel
@@ -182,6 +183,10 @@ class GraphDashBoardActivity : AppCompatActivity() {
             }
             notification.setOnClickListener {
                 navigateToNotificationActivity()
+            }
+
+            viewBranding.setOnClickListener {
+                startActivity(Intent(this@GraphDashBoardActivity, BrandingActivity::class.java))
             }
 
 

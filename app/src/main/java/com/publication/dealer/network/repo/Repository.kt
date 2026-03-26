@@ -1,9 +1,12 @@
 package com.publication.dealer.network.repo
 
 import com.publication.dealer.PDF_Upload.model.PDFUploadRequest
+import com.publication.dealer.admin_branding.model.UserBrandingModel
+import com.publication.dealer.admin_branding.model.UserResponseModel
 import com.publication.dealer.admin_catalogue.model.AddCatalogRequestModel
 import com.publication.dealer.admin_notification.model.BroadCastRequestmodel
 import com.publication.dealer.admin_notification.model.SendUserNotificationRequestmodel
+import com.publication.dealer.branding.model.AddBrandingModel
 import com.publication.dealer.create_user.model.SignUpRequestModel
 import com.publication.dealer.inactivate_user.model.InactivateUserRequest
 import com.publication.dealer.user_dashboard.model.DashBoardRequestModel
@@ -117,6 +120,27 @@ class Repository(private val api: ApiInterface) {
     suspend fun getNotificationById(id: String): Response<BaseResponse<List<BroadCastRequestmodel>>> {
         return api.getNotificationById(id)
     }
+
+
+    suspend fun getAllUsers(userID: String): Response<BaseResponse<List<UserResponseModel>>> {
+        return api.getAllUsers(userID)
+    }
+
+    suspend fun addBranding(
+        userIdBody: RequestBody? = null,
+        type: RequestBody? = null,
+        file: MultipartBody.Part? = null
+    ): Response<AddBrandingModel> {
+        return api.addBranding(userIdBody, type, file)
+    }
+
+
+    suspend fun getUserBranding(
+        userid: String
+    ): Response<BaseResponse<List<UserBrandingModel>>> {
+        return api.getUserBranding(userid)
+    }
+
 
 
 }
