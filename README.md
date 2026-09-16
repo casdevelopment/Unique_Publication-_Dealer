@@ -1,3 +1,5 @@
+<p align="center"><img width="154" height="149" alt="Screenshot 2026-09-17 035650" src="https://github.com/user-attachments/assets/ffbc6a94-c419-4768-b7e2-22d9870e8226" />
+</p>
 <h1 align="center">Unique Publication Dealer</h1>
 <p align="center">Android app for managing publication products and dealer operations — built with Kotlin & MVVM.</p>
 
@@ -18,11 +20,15 @@
 ## 📱 Screenshots
 
 <p align="center">
+   <img width="180" alt="Unique Publication Dealer screenshot" src="https://github.com/user-attachments/assets/26b7526b-f683-46e7-89c0-93005ecdc7d4" />
+   <img width="180" alt="Unique Publication Dealer screenshot" src="https://github.com/user-attachments/assets/4b83f428-3eed-4485-afb4-769280decb4a" />
+    <img width="180" alt="Unique Publication Dealer screenshot" src="https://github.com/user-attachments/assets/e3b5b59a-3319-4cd2-8f45-f41324923cbe" />
+   <img width="180" alt="Unique Publication Dealer screenshot" src="https://github.com/user-attachments/assets/c63c9b04-b4cf-478b-ae46-b44d82541330" />
   <img width="180" alt="Unique Publication Dealer screenshot" src="https://github.com/user-attachments/assets/9bf4c4f9-21e3-471c-a929-e3ae9f119b02" />
-  <img width="180" alt="Unique Publication Dealer screenshot" src="https://github.com/user-attachments/assets/c63c9b04-b4cf-478b-ae46-b44d82541330" />
-  <img width="180" alt="Unique Publication Dealer screenshot" src="https://github.com/user-attachments/assets/e3b5b59a-3319-4cd2-8f45-f41324923cbe" />
-  <img width="180" alt="Unique Publication Dealer screenshot" src="https://github.com/user-attachments/assets/4b83f428-3eed-4485-afb4-769280decb4a" />
-  <img width="180" alt="Unique Publication Dealer screenshot" src="https://github.com/user-attachments/assets/26b7526b-f683-46e7-89c0-93005ecdc7d4" />
+ 
+
+ 
+ 
 </p>
 
 ---
