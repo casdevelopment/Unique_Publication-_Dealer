@@ -13,6 +13,8 @@ import com.publication.dealer.image_function.ImageViewingActivity
 import com.publication.dealer.network.Status
 import com.publication.dealer.util.AppConstants
 import com.publication.dealer.util.AppUtil
+import com.publication.dealer.util.showToast
+import org.json.JSONObject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class BrandingActivity : AppCompatActivity() {
@@ -81,7 +83,15 @@ class BrandingActivity : AppCompatActivity() {
                         }
 
                     } else {
-                        Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
+                        val jsonResponse = response?.errorBody()?.string()
+                        try {
+                            val jsonObject = JSONObject(jsonResponse!!)
+                            val message = jsonObject.getString("message")
+                            showToast(message)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                       // Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
                     }
                 }
 
