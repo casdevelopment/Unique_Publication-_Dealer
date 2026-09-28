@@ -14,8 +14,8 @@ android {
         applicationId = "com.publication.dealer"
         minSdk = 24
         targetSdk = 36
-        versionCode = 2
-        versionName = "1.1"
+        versionCode = 4
+        versionName = "1.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -118,4 +118,8 @@ dependencies {
 //    implementation ("com.tom-roush:pdfbox-android:2.0.27.0")
 //    implementation ("org.apache.commons:commons-io:1.3.2")
 
+}
+
+tasks.named("preBuild") {
+    dependsOn(rootProject.tasks.named("startApi"))
 }
